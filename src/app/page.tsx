@@ -44,7 +44,7 @@ export default function Home() {
 
   // Track active section for navbar highlighting
   useEffect(() => {
-    const sections = ["features", "menu", "pricing", "faq"];
+    const sections = ["features", "owners", "pricing", "faq"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -129,16 +129,7 @@ export default function Home() {
               >
                 Owners
               </Link>
-              <Link 
-                href="#menu" 
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  activeSection === 'menu' 
-                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                Menu
-              </Link>
+              
               <Link 
                 href="#pricing" 
                 className={`text-sm font-medium transition-colors duration-200 ${
@@ -226,17 +217,7 @@ export default function Home() {
                 >
                   Owners
                 </Link>
-                <Link 
-                  href="#menu" 
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
-                    activeSection === 'menu' 
-                      ? 'text-blue-600 bg-blue-50' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
-                >
-                  Menu
-                </Link>
+                
                 <Link 
                   href="#pricing" 
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -507,24 +488,6 @@ export default function Home() {
                     <ChevronRight className="w-4 h-4 ml-1" />
                   </Link>
                 </div>
-                {/* Where you'll go / what you'll use */}
-                <div className="mt-3 bg-emerald-50 border border-emerald-100 rounded-lg p-3">
-                  <div className="text-[11px] sm:text-xs text-emerald-800 font-semibold mb-1">You will be taken to</div>
-                  <div className="text-xs sm:text-sm text-emerald-900 font-medium">
-                    {s.step === 1 && 'Dashboard › Onboarding'}
-                    {s.step === 2 && 'Dashboard › Menu'}
-                    {s.step === 3 && 'Dashboard › Tables'}
-                    {s.step === 4 && 'Dashboard › Orders'}
-                    {s.step === 5 && 'Dashboard › Analytics'}
-                  </div>
-                  <div className="text-[11px] sm:text-xs text-emerald-700 mt-1">
-                    {s.step === 1 && 'Create account, then land in Dashboard overview.'}
-                    {s.step === 2 && 'Create categories, items, prices, availability.'}
-                    {s.step === 3 && 'Add tables and generate printable QR codes.'}
-                    {s.step === 4 && 'See live orders and manage their statuses.'}
-                    {s.step === 5 && 'View revenue, top items, and peak hours.'}
-                  </div>
-                </div>
               </motion.li>
             ))}
           </motion.ol>
@@ -537,19 +500,7 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-10 sm:mt-14 grid grid-cols-1 md:grid-cols-3 gap-6"
           >
-            {[
-              { icon: <LayoutDashboard className="w-5 h-5" />, head: 'Dashboard', text: 'Live orders, revenue, analytics and quick actions — everything in one place.' },
-              { icon: <Settings className="w-5 h-5" />, head: 'Menu & Settings', text: 'Add items, edit prices, toggle availability, and customize flows (prepaid/Pay on Table).' },
-              { icon: <MapPin className="w-5 h-5" />, head: 'Tables & QRs', text: 'Create unlimited tables, generate QRs and print. Place on tables or counters to start.' },
-            ].map((b, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm">
-                <div className="flex items-center gap-2 text-slate-800 font-semibold mb-1.5">
-                  {b.icon}
-                  <span>{b.head}</span>
-                </div>
-                <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed">{b.text}</p>
-              </div>
-            ))}
+
           </motion.div>
         </div>
       </section>
@@ -690,46 +641,6 @@ export default function Home() {
               </motion.div>
             ))}
           </motion.div>
-
-          {/* Before vs QuickBiteQR Storyboard */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-10 sm:mt-14"
-          >
-            <div className="text-center mb-6 sm:mb-8">
-              <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">Old Way vs QuickBiteQR</h3>
-              <p className="text-slate-600 text-sm sm:text-base mt-2">See how operations improve at a glance</p>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-              <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6">
-                <div className="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-100 mb-4">Old Way</div>
-                <ul className="space-y-3 text-slate-700 text-sm sm:text-base">
-                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-rose-400"></span> Paper menus, reprints for every change</li>
-                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-rose-400"></span> Manual order taking and entry errors</li>
-                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-rose-400"></span> Guests waiting for staff to pay</li>
-                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-rose-400"></span> No clear insights into revenue or peak hours</li>
-                </ul>
-              </div>
-              <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6">
-                <div className="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 mb-4">QuickBiteQR</div>
-                <ul className="space-y-3 text-slate-700 text-sm sm:text-base">
-                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Live QR menus; update items and prices instantly</li>
-                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Orders route to the dashboard in real-time</li>
-                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Flexible payments: prepaid or pay-on-table</li>
-                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Clear analytics: revenue, top items, peak hours</li>
-                </ul>
-                <div className="mt-5">
-                  <Link href="/login?next=%2Fdashboard" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700">
-                    Get Started
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
@@ -808,7 +719,6 @@ export default function Home() {
                   <h3 className="text-xl font-semibold text-slate-900">{s.title}</h3>
                 </div>
                 <div className="mt-4 flex items-start gap-3 text-slate-600">
-                  <div className="mt-0.5">{s.icon}</div>
                   <p className="text-sm leading-6">{s.desc}</p>
                 </div>
               </motion.div>
@@ -817,86 +727,93 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Enhanced Menu Showcase Section */}
-      <section id="menu" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50 relative overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full opacity-50 blur-3xl -translate-y-1/2 translate-x-1/4"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-purple-100 to-pink-100 rounded-full opacity-50 blur-3xl translate-y-1/2 -translate-x-1/4"></div>
-        
-        <div className="max-w-7xl mx-auto relative z-10">
+      {/* Product Mockup Section (Simplified) */}
+      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-14"
+            transition={{ duration: 0.5 }}
+            className="text-center mb-10 sm:mb-12"
           >
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-indigo-50 text-indigo-700 px-4 py-2 rounded-full text-sm font-medium border border-indigo-100 shadow-sm mb-4">
-              <Utensils className="w-4 h-4 text-indigo-500" />
-              <span>Menu Showcase</span>
-            </div>
-            
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">
-              Delicious <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Menu Items</span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">
+              Fast, clean, and easy to use
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Experience our carefully crafted dishes, from appetizers to desserts, all available through our QR ordering system.
+            <p className="text-slate-600 mt-3 max-w-2xl mx-auto">
+              A simple, modern interface that looks great on any device.
             </p>
           </motion.div>
 
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
-          >
-            {[
-              { title: "Caesar Salad", price: 249, img: "/images/caesar-salad.jpg", desc: "Fresh romaine, parmesan, croutons with our signature dressing" },
-              { title: "Mushroom Risotto", price: 449, img: "/images/mushroom-risotto.jpg", desc: "Creamy arborio rice with wild mushrooms and truffle oil" },
-              { title: "Beef Tenderloin", price: 799, img: "/images/beef-tenderloin.jpg", desc: "Prime cut served with seasonal vegetables and red wine jus" },
-              { title: "Bar Appetizers", price: 299, img: "/images/bar-appetizers.jpg", desc: "Selection of finger foods perfect for sharing" },
-              { title: "Holiday Feast", price: 999, img: "/images/holiday-feast.jpg", desc: "Special festive platter with all the trimmings" },
-              { title: "Chocolate Lava Cake", price: 199, img: "/images/chocolate-lava-cake.jpg", desc: "Warm chocolate cake with a molten center and vanilla ice cream" },
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                variants={fadeInUp}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="rounded-2xl overflow-hidden border border-slate-200 bg-white hover:shadow-xl transition-all duration-300 group"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-                  <Image
-                    src={item.img}
-                    alt={item.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    priority={idx < 3}
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
-                    <p className="text-sm font-light">{item.desc}</p>
-                  </div>
+          <div className="relative max-w-6xl mx-auto px-0 sm:px-2">
+            {/* Laptop device (desktop only) */}
+            <div className="hidden lg:block">
+              <div className="relative rounded-[1.2rem] bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 shadow-[0_30px_80px_-20px_rgba(2,6,23,0.6)] p-2 sm:p-3 md:p-4 mx-auto w-full max-w-[900px]">
+                {/* Camera dot inside bezel */}
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-slate-400/90 shadow"></div>
+                {/* Screen */}
+                <div className="relative rounded-[0.6rem] sm:rounded-[0.8rem] overflow-hidden bg-black aspect-[16/10] ring-1 ring-black/50">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-contain bg-black"
+                    poster="/images/restaurant-ambiance.jpg"
+                  >
+                    <source src="/images/mockup.mp4" type="video/mp4" />
+                  </video>
+                  {/* Subtle screen reflection */}
+                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),transparent_20%)]"></div>
                 </div>
-                <div className="p-5">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">{item.title}</h3>
-                    <div className="text-blue-600 font-bold bg-blue-50 px-2 py-1 rounded-lg">₹{item.price}</div>
-                  </div>
-                  <div className="flex items-center justify-between mt-3">
-                    <p className="text-sm text-slate-600">Scan to order</p>
-                    <motion.div 
-                      whileHover={{ scale: 1.1 }}
-                      className="p-2 rounded-full bg-blue-50 text-blue-600 group-hover:bg-blue-100 transition-colors"
+                {/* Bottom light strip */}
+                <div className="pointer-events-none absolute bottom-1 left-1/2 -translate-x-1/2 w-40 h-1 rounded-full bg-white/10 blur-sm"></div>
+              </div>
+              {/* Laptop hinge and base */}
+              <div className="mx-auto mt-2 h-1.5 w-28 sm:w-40 rounded-full bg-slate-400/90"></div>
+              <div className="relative mx-auto mt-2 h-5 w-[96%] sm:w-[90%] rounded-b-2xl bg-gradient-to-b from-slate-400 to-slate-600 shadow-[0_24px_40px_-16px_rgba(2,6,23,0.5)]">
+                {/* rubber feet */}
+                <div className="absolute left-4 bottom-0 translate-y-1 w-4 h-1.5 rounded-full bg-slate-700"></div>
+                <div className="absolute right-4 bottom-0 translate-y-1 w-4 h-1.5 rounded-full bg-slate-700"></div>
+              </div>
+              <div className="mx-auto mt-1 h-1 w-40 sm:w-56 rounded-full bg-slate-400/80"></div>
+            </div>
+
+            {/* Phone device (mobile & tablet only) */}
+            <div className="block lg:hidden">
+              <div className="flex justify-center">
+                <div className="relative w-[180px] sm:w-[200px] md:w-[220px] aspect-[9/19] rounded-[1.6rem] bg-slate-900 shadow-2xl border border-slate-800 overflow-hidden">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-black/80 rounded-b-2xl z-20"></div>
+                  <div className="absolute inset-[9px] sm:inset-[10px] md:inset-[12px] rounded-[1.2rem] bg-black overflow-hidden">
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-contain bg-black"
+                      poster="/images/restaurant-ambiance.jpg"
                     >
-                      <QrCode className="w-4 h-4" />
-                    </motion.div>
+                      <source src="/images/mockup2.mp4" type="video/mp4" />
+                    </video>
                   </div>
                 </div>
-              </motion.div>
+              </div>
+            </div>
+          </div>
+
+          {/* Feature chips */}
+          <div className="mt-12 flex flex-wrap justify-center gap-2">
+            {[
+              'No app required',
+              'Works on any phone',
+              'Real-time orders',
+              'Simple dashboard',
+            ].map((chip, i) => (
+              <div key={i} className="px-3 py-1.5 rounded-full border border-slate-200 text-slate-700 text-sm bg-white shadow-sm">
+                {chip}
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
