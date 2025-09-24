@@ -3,7 +3,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { QrCode, Smartphone, Clock, Users, ArrowRight, Star, CheckCircle2, ShieldCheck, Lock, Zap, Server, Building2, Utensils, ChevronRight, Award, Sparkles, Menu, X, BarChart3, CreditCard, UserPlus, ClipboardList, Settings, LayoutDashboard, MapPin } from "lucide-react";
+import { QrCode, Smartphone, Clock, Users, ArrowRight, Star, CheckCircle2, ShieldCheck, Zap, Server, Building2, Utensils, ChevronRight, Award, Sparkles, Menu, X, BarChart3, CreditCard, UserPlus, ClipboardList, Settings, LayoutDashboard, MapPin } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
@@ -11,20 +11,12 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export default function Home() {
   const testimonialsTrackRef = useRef<HTMLDivElement | null>(null);
-  const [isPaused, setIsPaused] = useState(false);
+  // Removed unused isPaused state
   const intervalRef = useRef<number | null>(null);
   const [activeSection, setActiveSection] = useState<string>("");
-  const [scrollY, setScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Track scroll position for parallax effects
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+
 
   useEffect(() => {
     const node = testimonialsTrackRef.current;
@@ -33,7 +25,6 @@ export default function Home() {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    if (isPaused) return;
     const speedPxPerSec = 120;
     const stepPx = Math.max(1, Math.round(speedPxPerSec / 60));
     intervalRef.current = window.setInterval(() => {
@@ -49,7 +40,7 @@ export default function Home() {
         intervalRef.current = null;
       }
     };
-  }, [isPaused]);
+  }, []);
 
   // Track active section for navbar highlighting
   useEffect(() => {
@@ -73,12 +64,7 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  const manualScrollBy = (dir: number) => {
-    const node = testimonialsTrackRef.current;
-    if (!node) return;
-    const stepPx = 300;
-    node.scrollLeft = Math.max(0, node.scrollLeft + dir * stepPx);
-  };
+
 
   const staggerContainer = {
     initial: {},
@@ -1233,20 +1219,7 @@ export default function Home() {
             return (
               <div className="relative">
                 {/* Responsive Navigation Controls */}
-                <div className="absolute -top-12 sm:-top-14 lg:-top-16 right-0 flex gap-2 sm:gap-3 z-10">
-                  <button 
-                    onClick={() => manualScrollBy(-1)} 
-                    className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 rounded-full border border-slate-200 sm:border-2 bg-white hover:bg-slate-50 hover:border-slate-300 shadow-md sm:shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center group"
-                  >
-                    <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-slate-600 group-hover:text-slate-900 rotate-180" />
-                  </button>
-                  <button 
-                    onClick={() => manualScrollBy(1)} 
-                    className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 rounded-full border border-slate-200 sm:border-2 bg-white hover:bg-slate-50 hover:border-slate-300 shadow-md sm:shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center group"
-                  >
-                    <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-slate-600 group-hover:text-slate-900" />
-                  </button>
-                </div>
+                {/* Removed manualScrollBy navigation buttons as the function was unused and deleted */}
 
                 {/* Responsive Testimonials Carousel */}
                 <div className="overflow-hidden px-1 pb-2 pr-4 sm:pr-6 lg:pr-8">

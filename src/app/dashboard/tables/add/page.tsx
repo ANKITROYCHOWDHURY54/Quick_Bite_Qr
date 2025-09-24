@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { generateQR } from '@/lib/api/generateQR';
 import {supabase} from '@/lib/supabase/client'
 import { Skeleton } from '@/components/ui/skeleton';
-import { getRestaurantBySlug } from "@/lib/api/public";
 
 type Restaurant = {
   id: string;

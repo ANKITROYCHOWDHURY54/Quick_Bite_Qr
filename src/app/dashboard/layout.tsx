@@ -1,17 +1,9 @@
  'use client';
 import React, { useState } from 'react';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
 import {
-  Home,
-  UtensilsCrossed,
-  SquareKanban,
-  LogOut,
-  ListOrdered,
   Menu,
   X,
 } from 'lucide-react';
-import { logout } from '@/lib/auth/logout';
 import { DashboardNavCards } from '@/components/DashboardNavCards';
 
 export default function DashboardLayout({
