@@ -4,14 +4,19 @@ import { NextResponse } from 'next/server';
 import webpush from 'web-push';
 import { createServerClient } from '@/lib/supabase/server';
 
-const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!;
-const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY!;
-const VAPID_SUBJECT = process.env.VAPID_SUBJECT || 'mailto:admin@example.com';
-
-webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
-
 export async function POST(req: Request) {
   try {
+    const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+    const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY;
+    const VAPID_SUBJECT = process.env.VAPID_SUBJECT || 'mailto:admin@example.com';
+
+    if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) {
+      return NextResponse.json({ error: 'Push is not configured: missing VAPID keys' }, { status: 500 });
+    }
+
+    // Configure web-push per request to avoid build-time env access
+    webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
+
     const { orderId, title, message, url } = await req.json(); // Changed 'body' to 'message' for clarity
     if (!orderId) return NextResponse.json({ error: 'orderId required' }, { status: 400 });
 

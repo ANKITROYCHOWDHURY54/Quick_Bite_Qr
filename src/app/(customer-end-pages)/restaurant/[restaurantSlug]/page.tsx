@@ -4,6 +4,10 @@ import { getRestaurantBySlug } from "@/lib/api/public";
 import { Scan } from 'lucide-react';
 import Link from "next/link";
 
+// Avoid build-time data fetching; resolve at request time
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
 // This page now serves as a guide for users who land on the restaurant slug URL without a table ID.
 export default async function RestaurantLandingPage({ params }: { params: Promise<{ restaurantSlug: string }> }) {
   const { restaurantSlug } = await params;
