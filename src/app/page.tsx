@@ -1,0 +1,1625 @@
+// src/app/page.tsx
+
+"use client";
+
+import { motion } from "framer-motion";
+import { QrCode, Smartphone, Clock, Users, ArrowRight, Star, CheckCircle2, ShieldCheck, Lock, Zap, Server, Building2, Utensils, ChevronRight, Award, Sparkles, Menu, X, BarChart3, CreditCard, UserPlus, ClipboardList, Settings, LayoutDashboard, MapPin } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { useRef, useEffect, useState } from "react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+
+export default function Home() {
+  const testimonialsTrackRef = useRef<HTMLDivElement | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef<number | null>(null);
+  const [activeSection, setActiveSection] = useState<string>("");
+  const [scrollY, setScrollY] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Track scroll position for parallax effects
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const node = testimonialsTrackRef.current;
+    if (!node) return;
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    if (isPaused) return;
+    const speedPxPerSec = 120;
+    const stepPx = Math.max(1, Math.round(speedPxPerSec / 60));
+    intervalRef.current = window.setInterval(() => {
+      if (!node) return;
+      const noOverflow = node.scrollWidth <= node.clientWidth + 2;
+      if (noOverflow) return;
+      const nearEnd = node.scrollLeft + node.clientWidth >= node.scrollWidth - 2;
+      node.scrollLeft = nearEnd ? 0 : node.scrollLeft + stepPx;
+    }, 1000 / 60);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isPaused]);
+
+  // Track active section for navbar highlighting
+  useEffect(() => {
+    const sections = ["features", "menu", "pricing", "faq"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.3, rootMargin: "-100px 0px" }
+    );
+
+    sections.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const manualScrollBy = (dir: number) => {
+    const node = testimonialsTrackRef.current;
+    if (!node) return;
+    const stepPx = 300;
+    node.scrollLeft = Math.max(0, node.scrollLeft + dir * stepPx);
+  };
+
+  const staggerContainer = {
+    initial: {},
+    animate: {
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const fadeInUp = {
+    initial: {
+      y: 60,
+      opacity: 0,
+    },
+    animate: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  } as const;
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Enhanced Responsive Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <div className="flex items-center">
+              <Link href="/" className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                  <QrCode className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-xl font-bold text-slate-900">QuickBiteQR</span>
+              </Link>
+            </div>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-8">
+              <Link 
+                href="#features" 
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  activeSection === 'features' 
+                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                Features
+              </Link>
+              <Link 
+                href="#owners" 
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  activeSection === 'owners' 
+                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                Owners
+              </Link>
+              <Link 
+                href="#menu" 
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  activeSection === 'menu' 
+                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                Menu
+              </Link>
+              <Link 
+                href="#pricing" 
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  activeSection === 'pricing' 
+                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                Pricing
+              </Link>
+              <Link 
+                href="#faq" 
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  activeSection === 'faq' 
+                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                FAQ
+              </Link>
+            </div>
+
+            {/* Desktop CTA Buttons */}
+            <div className="hidden lg:flex items-center space-x-4">
+              <Link 
+                href="/login" 
+                className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link 
+                href="/signup" 
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-sm"
+              >
+                Get Started
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors duration-200"
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          <motion.div
+            initial={false}
+            animate={{
+              height: isMobileMenuOpen ? "auto" : 0,
+              opacity: isMobileMenuOpen ? 1 : 0,
+            }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden overflow-hidden"
+          >
+            <div className="py-4 space-y-4 border-t border-slate-200">
+              {/* Mobile Navigation Links */}
+              <div className="space-y-2">
+                <Link 
+                  href="#features" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
+                    activeSection === 'features' 
+                      ? 'text-blue-600 bg-blue-50' 
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  }`}
+                >
+                  Features
+                </Link>
+                <Link 
+                  href="#owners" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
+                    activeSection === 'owners' 
+                      ? 'text-blue-600 bg-blue-50' 
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  }`}
+                >
+                  Owners
+                </Link>
+                <Link 
+                  href="#menu" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
+                    activeSection === 'menu' 
+                      ? 'text-blue-600 bg-blue-50' 
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  }`}
+                >
+                  Menu
+                </Link>
+                <Link 
+                  href="#pricing" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
+                    activeSection === 'pricing' 
+                      ? 'text-blue-600 bg-blue-50' 
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  }`}
+                >
+                  Pricing
+                </Link>
+                <Link 
+                  href="#faq" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
+                    activeSection === 'faq' 
+                      ? 'text-blue-600 bg-blue-50' 
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  }`}
+                >
+                  FAQ
+                </Link>
+              </div>
+
+              {/* Mobile CTA Buttons */}
+              <div className="pt-4 border-t border-slate-200 space-y-3">
+                <Link 
+                  href="/login" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-center px-4 py-3 text-base font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors duration-200"
+                >
+                  Sign In
+                </Link>
+                <Link 
+                  href="/signup" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-3 rounded-lg text-base font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-sm"
+                >
+                  Get Started
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </nav>
+
+      {/* Enhanced Hero Section with Video */}
+      <section className="pt-16 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full opacity-50 blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-purple-100 to-pink-100 rounded-full opacity-50 blur-3xl translate-y-1/2 -translate-x-1/4"></div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+            {/* Left Column - Text Content */}
+            <div className="text-center lg:text-left">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-indigo-50 text-indigo-700 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium border border-indigo-100 shadow-sm mb-6 sm:mb-8"
+              >
+                <Sparkles className="w-4 h-4 text-indigo-500" />
+                <span>Revolutionary QR Ordering System</span>
+              </motion.div>
+              
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 mb-4 sm:mb-6"
+              >
+                Transform Your
+                <span className="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  Restaurant Experience
+                </span>
+              </motion.h1>
+              
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed px-1 sm:px-0"
+              >
+                Eliminate wait times, reduce errors, and delight customers with our seamless QR code ordering system. 
+                Set up in minutes, scale effortlessly.
+              </motion.p>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start items-center"
+              >
+              <Link 
+                href="/login?next=%2Fdashboard" 
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-xl text-base sm:text-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 w-full sm:w-auto text-center"
+                >
+                  Start Free Trial
+                  <ArrowRight className="inline-block ml-2 w-5 h-5" />
+                </Link>
+                <Link 
+                  href="#features" 
+                  className="text-slate-600 hover:text-slate-900 px-6 py-3 sm:px-8 sm:py-4 rounded-xl text-base sm:text-lg font-semibold border border-slate-300 hover:border-slate-400 transition-all duration-200 w-full sm:w-auto text-center"
+                >
+                  Learn More
+                </Link>
+              </motion.div>
+
+              {/* Stats */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="mt-8 sm:mt-12 grid grid-cols-3 gap-4 sm:gap-8 max-w-md mx-auto lg:mx-0"
+              >
+                <div className="text-center">
+                  <div className="text-xl sm:text-2xl font-bold text-slate-900">5 min</div>
+                  <div className="text-xs sm:text-sm text-slate-600">Setup Time</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl sm:text-2xl font-bold text-slate-900">40%</div>
+                  <div className="text-xs sm:text-sm text-slate-600">Faster Service</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl sm:text-2xl font-bold text-slate-900">99.9%</div>
+                  <div className="text-xs sm:text-sm text-slate-600">Uptime</div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right Column - Video Demo */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative"
+            >
+              <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+                {/* Video Container */}
+                <div className="relative aspect-video bg-gradient-to-br from-slate-100 to-slate-200">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                    poster="/images/restaurant-ambiance.jpg"
+                  >
+                    <source src="/images/QrCode (2).mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  
+                  {/* Video Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+
+                {/* Video Info */}
+                <div className="p-6 bg-gradient-to-r from-slate-50 to-white">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <span className="text-sm text-slate-500 ml-2">QuickBiteQR Demo</span>
+                  </div>
+                  <h3 className="font-semibold text-slate-900 mb-2">See it in action</h3>
+                  <p className="text-sm text-slate-600">
+                    Watch how customers scan, order, and pay seamlessly with our QR system
+                  </p>
+                </div>
+              </div>
+
+              {/* Floating Elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full opacity-20 blur-xl"></div>
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full opacity-20 blur-xl"></div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Step-by-step for Restaurant Owners */}
+      <section id="how-it-works-owner" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-700 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium border border-emerald-100 shadow-sm mb-3 sm:mb-4">
+              <ClipboardList className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span>How to use QuickBiteQR</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-3 sm:mb-4">
+              From Setup to Orders in <span className="bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">5 Simple Steps</span>
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto px-2 sm:px-0">
+              A clear path for restaurant owners — what to do, where to click, and what happens next.
+            </p>
+          </motion.div>
+
+          <motion.ol
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8"
+          >
+            {[
+              {
+                step: 1,
+                title: 'Create your account',
+                desc: 'Sign up with your email and basic restaurant details. It takes less than a minute.',
+                icon: <UserPlus className="w-6 h-6" />,
+                action: 'Go to Sign up',
+                href: '/signup'
+              },
+              {
+                step: 2,
+                title: 'Add menu & items',
+                desc: 'Create categories, add items, prices, images and availability from the dashboard.',
+                icon: <Utensils className="w-6 h-6" />,
+                action: 'Open Dashboard',
+                href: '/dashboard/menu'
+              },
+              {
+                step: 3,
+                title: 'Generate QR codes',
+                desc: 'Create unlimited QRs (no table limit) and print. Place one on each table or zone.',
+                icon: <QrCode className="w-6 h-6" />,
+                action: 'Generate QR',
+                href: '/dashboard/tables'
+              },
+              {
+                step: 4,
+                title: 'Start taking orders',
+                desc: 'Guests scan, browse, and place orders from their phone. Orders appear live to staff.',
+                icon: <Smartphone className="w-6 h-6" />,
+                action: 'View Live Orders',
+                href: '/dashboard/orders'
+              },
+              {
+                step: 5,
+                title: 'Track revenue & insights',
+                desc: 'Monitor total revenue, popular items, and peak hours in the analytics dashboard.',
+                icon: <BarChart3 className="w-6 h-6" />,
+                action: 'See Analytics',
+                href: '/dashboard'
+              },
+            ].map((s, i) => (
+              <motion.li
+                key={i}
+                variants={fadeInUp}
+                className="relative bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 p-5 sm:p-6 lg:p-8 flex flex-col"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 flex items-center justify-center">
+                    {s.icon}
+                  </div>
+                  <div className="text-sm font-semibold text-emerald-700">Step {s.step}</div>
+                </div>
+                <h3 className="text-lg sm:text-xl font-semibold text-slate-900 mb-2">{s.title}</h3>
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed flex-1">{s.desc}</p>
+                <div className="mt-4">
+              <Link href={`/login?next=${encodeURIComponent(s.href)}`} className="inline-flex items-center text-emerald-700 hover:text-emerald-800 text-sm font-semibold">
+                    {s.action}
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </Link>
+                </div>
+                {/* Where you'll go / what you'll use */}
+                <div className="mt-3 bg-emerald-50 border border-emerald-100 rounded-lg p-3">
+                  <div className="text-[11px] sm:text-xs text-emerald-800 font-semibold mb-1">You will be taken to</div>
+                  <div className="text-xs sm:text-sm text-emerald-900 font-medium">
+                    {s.step === 1 && 'Dashboard › Onboarding'}
+                    {s.step === 2 && 'Dashboard › Menu'}
+                    {s.step === 3 && 'Dashboard › Tables'}
+                    {s.step === 4 && 'Dashboard › Orders'}
+                    {s.step === 5 && 'Dashboard › Analytics'}
+                  </div>
+                  <div className="text-[11px] sm:text-xs text-emerald-700 mt-1">
+                    {s.step === 1 && 'Create account, then land in Dashboard overview.'}
+                    {s.step === 2 && 'Create categories, items, prices, availability.'}
+                    {s.step === 3 && 'Add tables and generate printable QR codes.'}
+                    {s.step === 4 && 'See live orders and manage their statuses.'}
+                    {s.step === 5 && 'View revenue, top items, and peak hours.'}
+                  </div>
+                </div>
+              </motion.li>
+            ))}
+          </motion.ol>
+
+          {/* Visual map of where things live */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-10 sm:mt-14 grid grid-cols-1 md:grid-cols-3 gap-6"
+          >
+            {[
+              { icon: <LayoutDashboard className="w-5 h-5" />, head: 'Dashboard', text: 'Live orders, revenue, analytics and quick actions — everything in one place.' },
+              { icon: <Settings className="w-5 h-5" />, head: 'Menu & Settings', text: 'Add items, edit prices, toggle availability, and customize flows (prepaid/Pay on Table).' },
+              { icon: <MapPin className="w-5 h-5" />, head: 'Tables & QRs', text: 'Create unlimited tables, generate QRs and print. Place on tables or counters to start.' },
+            ].map((b, i) => (
+              <div key={i} className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm">
+                <div className="flex items-center gap-2 text-slate-800 font-semibold mb-1.5">
+                  {b.icon}
+                  <span>{b.head}</span>
+                </div>
+                <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed">{b.text}</p>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* For Restaurant Owners */}
+      <section id="owners" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white relative">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-indigo-50 text-indigo-700 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium border border-indigo-100 shadow-sm mb-3 sm:mb-4">
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-indigo-500" />
+              <span>Built for Restaurant Owners</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-3 sm:mb-4">
+              Grow Faster with <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">QuickBiteQR</span>
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto px-2 sm:px-0">
+              Create unlimited QR menus, take orders from tables, and manage everything from a powerful dashboard.
+            </p>
+          </motion.div>
+
+          {/* Outcomes KPI band */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-8 sm:mb-10"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              {[
+                { k: 'Faster Table Turns', v: '40%', note: 'average improvement' },
+                { k: 'Higher Order Value', v: '+25%', note: 'vs. paper menus' },
+                { k: 'Paper & Print Cost', v: '₹0', note: 'go fully digital' },
+              ].map((m, i) => (
+                <div key={i} className="bg-gradient-to-r from-slate-50 to-white border border-slate-200 rounded-xl p-4 sm:p-5 flex items-center justify-between">
+                  <div className="text-sm sm:text-base font-semibold text-slate-800">{m.k}</div>
+                  <div className="text-right">
+                    <div className="text-xl sm:text-2xl font-bold text-slate-900">{m.v}</div>
+                    <div className="text-[11px] sm:text-xs text-slate-500">{m.note}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Owner Toolbar */}
+          <div className="mb-8">
+            <div className="bg-white/80 backdrop-blur-md border border-slate-200 rounded-2xl shadow-sm p-3 sm:p-4 flex flex-wrap gap-2 sm:gap-3 justify-center">
+              <Link href="/login?next=%2Fdashboard%2Ftables" className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-900 transition-colors">
+                <QrCode className="w-4 h-4" /> Generate QR
+              </Link>
+              <Link href="/login?next=%2Fdashboard%2Fmenu" className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-900 transition-colors">
+                <Utensils className="w-4 h-4" /> Add Items
+              </Link>
+              <Link href="/login?next=%2Fdashboard%2Forders" className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-900 transition-colors">
+                <ClipboardList className="w-4 h-4" /> View Orders
+              </Link>
+              <Link href="/login?next=%2Fdashboard" className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transition-colors">
+                <LayoutDashboard className="w-4 h-4" /> Open Dashboard
+              </Link>
+            </div>
+            {/* Where these buttons go */}
+            <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+              {[ 
+                { label: 'Generate QR', path: 'Dashboard › Tables', note: 'Create unlimited tables & print QRs' },
+                { label: 'Add Items', path: 'Dashboard › Menu', note: 'Add/edit items, prices, photos' },
+                { label: 'View Orders', path: 'Dashboard › Orders', note: 'See live orders & statuses' },
+                { label: 'Open Dashboard', path: 'Dashboard', note: 'Revenue, analytics, quick actions' },
+              ].map((i, idx) => (
+                <div key={idx} className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs sm:text-sm">
+                  <div className="font-semibold text-slate-800">{i.path}</div>
+                  <div className="text-slate-600">{i.note}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          >
+            {[ 
+              {
+                title: 'Unlimited QR Codes (No Table Limit)',
+                desc: 'Generate unique QR codes for every table or zone without any limit. Print, place, and start taking orders instantly.',
+                icon: <QrCode className="w-6 h-6" />,
+              },
+              {
+                title: 'Take Orders from Table',
+                desc: 'Guests scan and order right from their table. Orders appear live in your dashboard so staff can prepare faster.',
+                icon: <Users className="w-6 h-6" />,
+              },
+              {
+                title: 'Realtime Dashboard & Revenue',
+                desc: 'Track total revenue, live orders, best sellers, and peak hours with a beautiful, real‑time dashboard.',
+                icon: <BarChart3 className="w-6 h-6" />,
+              },
+              {
+                title: 'Easy Menu Management',
+                desc: 'Add, edit, and hide items in seconds. Manage photos, prices, and availability without disrupting service.',
+                icon: <Utensils className="w-6 h-6" />,
+              },
+              {
+                title: 'Prepaid or Pay on Table',
+                desc: 'Offer prepaid checkout or let customers pay at the table. Flexible flows to match your operations.',
+                icon: <CreditCard className="w-6 h-6" />,
+              },
+              {
+                title: 'Insights & Analytics',
+                desc: 'Understand what sells, when it sells, and who orders it. Make decisions backed by clear data.',
+                icon: <Sparkles className="w-6 h-6" />,
+              },
+            ].map((f, i) => (
+              <motion.div
+                key={i}
+                variants={fadeInUp}
+                whileHover={{ y: -4, scale: 1.01 }}
+                className="bg-white rounded-2xl border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-lg transition-all duration-300 p-5 sm:p-6 lg:p-8"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2.5 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100 text-slate-700">
+                    {f.icon}
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-semibold text-slate-900">{f.title}</h3>
+                </div>
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                  {f.desc}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Before vs QuickBiteQR Storyboard */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mt-10 sm:mt-14"
+          >
+            <div className="text-center mb-6 sm:mb-8">
+              <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">Old Way vs QuickBiteQR</h3>
+              <p className="text-slate-600 text-sm sm:text-base mt-2">See how operations improve at a glance</p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+              <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6">
+                <div className="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-100 mb-4">Old Way</div>
+                <ul className="space-y-3 text-slate-700 text-sm sm:text-base">
+                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-rose-400"></span> Paper menus, reprints for every change</li>
+                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-rose-400"></span> Manual order taking and entry errors</li>
+                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-rose-400"></span> Guests waiting for staff to pay</li>
+                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-rose-400"></span> No clear insights into revenue or peak hours</li>
+                </ul>
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6">
+                <div className="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 mb-4">QuickBiteQR</div>
+                <ul className="space-y-3 text-slate-700 text-sm sm:text-base">
+                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Live QR menus; update items and prices instantly</li>
+                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Orders route to the dashboard in real-time</li>
+                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Flexible payments: prepaid or pay-on-table</li>
+                  <li className="flex items-start gap-2"><span className="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Clear analytics: revenue, top items, peak hours</li>
+                </ul>
+                <div className="mt-5">
+                  <Link href="/login?next=%2Fdashboard" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700">
+                    Get Started
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Enhanced Features Section */}
+      <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50 relative">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-50 to-indigo-50 text-indigo-700 px-4 py-2 rounded-full text-sm font-medium border border-indigo-100 shadow-sm mb-4">
+              <Sparkles className="w-4 h-4 text-indigo-500" />
+              <span>Powerful and easy to use</span>
+            </div>
+            
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">
+              Everything you need to <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">modernize</span> your restaurant
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              From QR code generation to real-time order management, we provide all the tools you need to create an exceptional dining experience.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                icon: <QrCode className="w-8 h-8 text-blue-600" />,
+                title: "Instant QR Codes",
+                desc: "Generate unique QR codes for each table in seconds. No technical knowledge required."
+              },
+              {
+                icon: <Smartphone className="w-8 h-8 text-green-600" />,
+                title: "Mobile-First Design",
+                desc: "Beautiful, responsive menus that work perfectly on any device your customers use."
+              },
+              {
+                icon: <Clock className="w-8 h-8 text-purple-600" />,
+                title: "Real-Time Orders",
+                desc: "See orders as they come in with live updates and instant notifications."
+              },
+              {
+                icon: <Users className="w-8 h-8 text-orange-600" />,
+                title: "Staff Management",
+                desc: "Assign orders to staff members and track preparation times effortlessly."
+              },
+              {
+                icon: <ShieldCheck className="w-8 h-8 text-red-600" />,
+                title: "Secure Payments",
+                desc: "Integrated payment processing with industry-standard security and fraud protection."
+              },
+              {
+                icon: <Award className="w-8 h-8 text-indigo-600" />,
+                title: "Analytics Dashboard",
+                desc: "Track sales, popular items, and customer preferences with detailed insights."
+              }
+            ].map((s, idx) => (
+              <motion.div
+                key={idx}
+                variants={fadeInUp}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 group"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 rounded-xl bg-slate-50 group-hover:bg-slate-100 transition-colors">
+                    {s.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900">{s.title}</h3>
+                </div>
+                <div className="mt-4 flex items-start gap-3 text-slate-600">
+                  <div className="mt-0.5">{s.icon}</div>
+                  <p className="text-sm leading-6">{s.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Enhanced Menu Showcase Section */}
+      <section id="menu" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full opacity-50 blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-purple-100 to-pink-100 rounded-full opacity-50 blur-3xl translate-y-1/2 -translate-x-1/4"></div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-14"
+          >
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-indigo-50 text-indigo-700 px-4 py-2 rounded-full text-sm font-medium border border-indigo-100 shadow-sm mb-4">
+              <Utensils className="w-4 h-4 text-indigo-500" />
+              <span>Menu Showcase</span>
+            </div>
+            
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">
+              Delicious <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Menu Items</span>
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              Experience our carefully crafted dishes, from appetizers to desserts, all available through our QR ordering system.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+          >
+            {[
+              { title: "Caesar Salad", price: 249, img: "/images/caesar-salad.jpg", desc: "Fresh romaine, parmesan, croutons with our signature dressing" },
+              { title: "Mushroom Risotto", price: 449, img: "/images/mushroom-risotto.jpg", desc: "Creamy arborio rice with wild mushrooms and truffle oil" },
+              { title: "Beef Tenderloin", price: 799, img: "/images/beef-tenderloin.jpg", desc: "Prime cut served with seasonal vegetables and red wine jus" },
+              { title: "Bar Appetizers", price: 299, img: "/images/bar-appetizers.jpg", desc: "Selection of finger foods perfect for sharing" },
+              { title: "Holiday Feast", price: 999, img: "/images/holiday-feast.jpg", desc: "Special festive platter with all the trimmings" },
+              { title: "Chocolate Lava Cake", price: 199, img: "/images/chocolate-lava-cake.jpg", desc: "Warm chocolate cake with a molten center and vanilla ice cream" },
+            ].map((item, idx) => (
+              <motion.div
+                key={idx}
+                variants={fadeInUp}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="rounded-2xl overflow-hidden border border-slate-200 bg-white hover:shadow-xl transition-all duration-300 group"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+                  <Image
+                    src={item.img}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    priority={idx < 3}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
+                    <p className="text-sm font-light">{item.desc}</p>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">{item.title}</h3>
+                    <div className="text-blue-600 font-bold bg-blue-50 px-2 py-1 rounded-lg">₹{item.price}</div>
+                  </div>
+                  <div className="flex items-center justify-between mt-3">
+                    <p className="text-sm text-slate-600">Scan to order</p>
+                    <motion.div 
+                      whileHover={{ scale: 1.1 }}
+                      className="p-2 rounded-full bg-blue-50 text-blue-600 group-hover:bg-blue-100 transition-colors"
+                    >
+                      <QrCode className="w-4 h-4" />
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Enhanced Pricing Section */}
+      <section id="pricing" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full opacity-30 blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-tr from-purple-100 to-pink-100 rounded-full opacity-30 blur-3xl translate-y-1/2 -translate-x-1/4"></div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-50 to-emerald-50 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium border border-emerald-100 shadow-sm mb-4">
+              <Award className="w-4 h-4 text-emerald-500" />
+              <span>Flexible Pricing</span>
+            </div>
+            
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-3 sm:mb-4">
+              Choose Your <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Perfect Plan</span>
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto px-2 sm:px-0">
+              Start free and scale as you grow. No hidden fees, no long-term contracts. 
+              Cancel or upgrade anytime.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12"
+          >
+            {[
+              {
+                name: "Starter",
+                icon: <Users className="w-6 h-6" />,
+                price: "Free",
+                period: "forever",
+                originalPrice: null,
+                description: "Perfect for small cafes and food trucks",
+                features: [
+                  { text: "Up to 5 tables", included: true },
+                  { text: "Basic menu management", included: true },
+                  { text: "QR code generation", included: true },
+                  { text: "Email support", included: true },
+                  { text: "Basic analytics", included: true },
+                  { text: "Real-time orders", included: false },
+                  { text: "Staff management", included: false }
+                ],
+                cta: "Get Started Free",
+                ctaStyle: "secondary",
+                popular: false
+              },
+              {
+                name: "Pro",
+                icon: <Zap className="w-6 h-6" />,
+                price: "₹2,999",
+                period: "per month",
+                originalPrice: "₹3,999",
+                description: "Ideal for growing restaurants",
+                features: [
+                  { text: "Unlimited tables", included: true },
+                  { text: "Advanced menu management", included: true },
+                  { text: "Real-time order tracking", included: true },
+                  { text: "Staff management", included: true },
+                  { text: "Priority support", included: true },
+                  { text: "Advanced analytics", included: true },
+                  { text: "Custom branding", included: true },
+                  { text: "API access", included: false }
+                ],
+                cta: "Start Pro Trial",
+                ctaStyle: "primary",
+                popular: true
+              },
+              {
+                name: "Business",
+                icon: <Building2 className="w-6 h-6" />,
+                price: "₹4,999",
+                period: "per month",
+                originalPrice: null,
+                description: "For multi-location restaurants",
+                features: [
+                  { text: "Everything in Pro", included: true },
+                  { text: "Multi-location support", included: true },
+                  { text: "Advanced reporting", included: true },
+                  { text: "API access", included: true },
+                  { text: "Dedicated account manager", included: true },
+                  { text: "Custom integrations", included: true },
+                  { text: "White-label options", included: true },
+                  { text: "24/7 phone support", included: true }
+                ],
+                cta: "Contact Sales",
+                ctaStyle: "secondary",
+                popular: false
+              }
+            ].map((plan, idx) => (
+              <motion.div
+                key={idx}
+                variants={fadeInUp}
+                whileHover={{ y: -12, scale: 1.03 }}
+                className="relative group"
+              >
+                {/* Popular Plan Ribbon */}
+                {plan.popular && (
+                  <div className="absolute -top-4 sm:-top-5 md:-top-6 left-1/2 transform -translate-x-1/2 z-20">
+                    <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-3 py-1 sm:px-4 sm:py-1.5 md:px-6 md:py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-semibold shadow-lg flex items-center gap-1.5 sm:gap-2">
+                      <Star className="w-4 h-4 fill-current" />
+                      Most Popular
+                    </div>
+                  </div>
+                )}
+
+                <div className={`relative bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg border-2 transition-all duration-300 group-hover:shadow-2xl flex flex-col h-full ${
+                  plan.popular 
+                    ? 'border-blue-500 bg-gradient-to-b from-blue-50/50 to-white' 
+                    : 'border-slate-200 hover:border-slate-300'
+                }`}>
+                  {/* Plan Icon and Header */}
+                  <div className="text-center mb-6 sm:mb-8">
+                    <div className={`inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 ${
+                      plan.popular 
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' 
+                        : 'bg-slate-100 text-slate-600 group-hover:bg-slate-200'
+                    } transition-colors duration-300`}>
+                      {plan.icon}
+                    </div>
+                    
+                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-1 sm:mb-2">{plan.name}</h3>
+                    <p className="text-slate-600 mb-4 sm:mb-6 text-sm sm:text-base px-2 sm:px-0">{plan.description}</p>
+                    
+                    {/* Pricing */}
+                    <div className="mb-4 sm:mb-6">
+                      {plan.originalPrice && (
+                        <div className="text-sm text-slate-500 line-through mb-1">
+                          {plan.originalPrice}/month
+                        </div>
+                      )}
+                      <div className="flex items-baseline justify-center">
+                        <span className={`text-4xl sm:text-5xl font-bold ${
+                          plan.popular ? 'bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent' : 'text-slate-900'
+                        }`}>
+                          {plan.price}
+                        </span>
+                        <span className="text-slate-600 ml-2 text-sm sm:text-lg">/{plan.period}</span>
+                      </div>
+                      {plan.originalPrice && (
+                        <div className="text-sm text-green-600 font-medium mt-2">
+                          Save ₹1,000/month
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Features List */}
+                  <ul className="space-y-4 mb-8 flex-1">
+                    {plan.features.map((feature, featureIdx) => (
+                      <li key={featureIdx} className="flex items-start">
+                        <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-0.5 ${
+                          feature.included 
+                            ? 'bg-green-100 text-green-600' 
+                            : 'bg-slate-100 text-slate-400'
+                        }`}>
+                          {feature.included ? (
+                            <CheckCircle2 className="w-3 h-3" />
+                          ) : (
+                            <div className="w-2 h-2 rounded-full bg-slate-300"></div>
+                          )}
+                        </div>
+                        <span className={`text-sm ${
+                          feature.included ? 'text-slate-700' : 'text-slate-400'
+                        }`}>
+                          {feature.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA Button */}
+                  <Link
+                    href="/login?next=%2Fdashboard"
+                    className={`w-full mt-auto block text-center py-4 px-6 rounded-xl font-semibold transition-all duration-200 transform group-hover:scale-105 ${
+                      plan.ctaStyle === 'primary'
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl'
+                        : plan.popular
+                        ? 'bg-gradient-to-r from-slate-900 to-slate-800 text-white hover:from-slate-800 hover:to-slate-700 shadow-lg hover:shadow-xl'
+                        : 'bg-slate-100 text-slate-900 hover:bg-slate-200 border border-slate-200'
+                    }`}
+                  >
+                    {plan.cta}
+                    <ArrowRight className="inline-block ml-2 w-4 h-4" />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Additional Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-center mt-16"
+          >
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 max-w-4xl mx-auto">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <ShieldCheck className="w-5 h-5 text-green-600" />
+                <span className="text-sm font-medium text-slate-700">All plans include</span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-slate-600">
+                <div className="flex items-center justify-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  <span>30-day money-back guarantee</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  <span>No setup fees</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  <span>Cancel anytime</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Enhanced Responsive Testimonials Section */}
+      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-br from-amber-100 to-orange-100 rounded-full opacity-30 blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-tr from-blue-100 to-indigo-100 rounded-full opacity-30 blur-3xl translate-y-1/2 -translate-x-1/4"></div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-50 to-orange-50 text-orange-700 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium border border-orange-100 shadow-sm mb-3 sm:mb-4">
+              <Star className="w-3 h-3 sm:w-4 sm:h-4 text-orange-500 fill-current" />
+              <span>Customer Stories</span>
+            </div>
+            
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-3 sm:mb-4 px-4">
+              Loved by <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Restaurants</span> Worldwide
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto px-4">
+              Join thousands of satisfied restaurant owners who have transformed their dining experience with QuickBiteQR.
+            </p>
+          </motion.div>
+
+          {(() => {
+            const base = [
+              { 
+                quote: "QuickBiteQR streamlined our ordering and reduced wait times by 40%. Our customers love the seamless experience!", 
+                name: "Aisha Khan", 
+                role: "Owner, Spice Route", 
+                avatar: "https://i.pravatar.cc/150?img=47",
+                restaurant: "Spice Route",
+                location: "Mumbai, India",
+                rating: 5
+              },
+              { 
+                quote: "Setup took minutes. Our customers love the seamless experience and our staff can focus on what matters most.", 
+                name: "Marco Rossi", 
+                role: "Manager, Trattoria Roma", 
+                avatar: "https://i.pravatar.cc/150?img=12",
+                restaurant: "Trattoria Roma",
+                location: "Rome, Italy",
+                rating: 5
+              },
+              { 
+                quote: "We replaced paper menus across 3 locations in a day. The transition was incredibly smooth and our customers adapted quickly.", 
+                name: "Sofia García", 
+                role: "GM, Casa Verde", 
+                avatar: "https://i.pravatar.cc/150?img=32",
+                restaurant: "Casa Verde",
+                location: "Barcelona, Spain",
+                rating: 5
+              },
+              { 
+                quote: "The analytics helped us optimize our menu for higher margins. We've seen a 25% increase in average order value.", 
+                name: "Neha Verma", 
+                role: "Founder, Café Bloom", 
+                avatar: "https://i.pravatar.cc/150?img=5",
+                restaurant: "Café Bloom",
+                location: "Delhi, India",
+                rating: 5
+              },
+              { 
+                quote: "Our staff focus on guests, not on taking orders. The efficiency gains have been remarkable.", 
+                name: "David Miller", 
+                role: "Owner, Harbor Grill", 
+                avatar: "https://i.pravatar.cc/150?img=22",
+                restaurant: "Harbor Grill",
+                location: "New York, USA",
+                rating: 5
+              },
+              { 
+                quote: "Customers love scanning and paying right from the table. It's the future of dining and we're proud to be early adopters.", 
+                name: "Linh Tran", 
+                role: "Café Manager", 
+                avatar: "https://i.pravatar.cc/150?img=68",
+                restaurant: "Golden Dragon",
+                location: "Ho Chi Minh, Vietnam",
+                rating: 5
+              },
+            ];
+            const testimonials = [...base, ...base]; // duplicate to ensure overflow for auto-scroll
+            return (
+              <div className="relative">
+                {/* Responsive Navigation Controls */}
+                <div className="absolute -top-12 sm:-top-14 lg:-top-16 right-0 flex gap-2 sm:gap-3 z-10">
+                  <button 
+                    onClick={() => manualScrollBy(-1)} 
+                    className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 rounded-full border border-slate-200 sm:border-2 bg-white hover:bg-slate-50 hover:border-slate-300 shadow-md sm:shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center group"
+                  >
+                    <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-slate-600 group-hover:text-slate-900 rotate-180" />
+                  </button>
+                  <button 
+                    onClick={() => manualScrollBy(1)} 
+                    className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 rounded-full border border-slate-200 sm:border-2 bg-white hover:bg-slate-50 hover:border-slate-300 shadow-md sm:shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center group"
+                  >
+                    <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-slate-600 group-hover:text-slate-900" />
+                  </button>
+                </div>
+
+                {/* Responsive Testimonials Carousel */}
+                <div className="overflow-hidden px-1 pb-2 pr-4 sm:pr-6 lg:pr-8">
+                  <div className="flex gap-3 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 marquee will-change-transform">
+                    {[...testimonials, ...testimonials].map((t, i) => (
+                      <motion.div
+                        key={i}
+                        whileHover={{ y: -4, scale: 1.01 }}
+                        className="shrink-0 w-[85%] xs:w-[75%] sm:w-[65%] md:w-[55%] lg:w-[45%] xl:w-[35%] 2xl:w-[30%] group"
+                      >
+                        <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 lg:p-8 xl:p-10 shadow-md sm:shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:border-slate-300 relative overflow-hidden h-full">
+                          {/* Quote Icon */}
+                          <div className="absolute top-3 right-3 sm:top-4 sm:right-4 lg:top-6 lg:right-6 opacity-10">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center">
+                              <span className="text-white text-lg sm:text-xl lg:text-2xl font-bold">"</span>
+                            </div>
+                          </div>
+
+                          {/* Rating Stars */}
+                          <div className="flex items-center gap-0.5 sm:gap-1 mb-3 sm:mb-4 lg:mb-6">
+                            {Array.from({ length: t.rating }).map((_, idx) => (
+                              <Star key={idx} className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-amber-400 fill-current" />
+                            ))}
+                          </div>
+
+                          {/* Quote Text */}
+                          <blockquote className="text-slate-700 text-sm sm:text-base lg:text-lg leading-relaxed mb-4 sm:mb-6 lg:mb-8 relative z-10 pr-2">
+                            "{t.quote}"
+                          </blockquote>
+
+                          {/* Customer Info */}
+                          <div className="flex items-center gap-3 sm:gap-4">
+                            <div className="relative flex-shrink-0">
+                              <Avatar className="h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 ring-2 sm:ring-4 ring-slate-100">
+                                <AvatarImage src={t.avatar} alt={t.name} />
+                                <AvatarFallback className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-xs sm:text-sm">
+                                  {t.name.split(" ").map(x=>x[0]).join("").slice(0,2).toUpperCase()}
+                                </AvatarFallback>
+                              </Avatar>
+                              {/* Online Status Indicator */}
+                              <div className="absolute -bottom-0.5 -right-0.5 sm:-bottom-1 sm:-right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 lg:w-4 lg:h-4 bg-green-500 rounded-full border border-white"></div>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-bold text-slate-900 text-sm sm:text-base lg:text-lg leading-tight truncate">{t.name}</h4>
+                              <p className="text-slate-600 text-xs sm:text-sm font-medium truncate">{t.role}</p>
+                              <div className="flex items-center gap-1 sm:gap-2 mt-0.5 sm:mt-1">
+                                <Building2 className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-slate-400 flex-shrink-0" />
+                                <span className="text-xs text-slate-500 truncate">{t.restaurant}</span>
+                                <span className="text-xs text-slate-400">•</span>
+                                <span className="text-xs text-slate-500 truncate">{t.location}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Decorative Elements */}
+                          <div className="absolute bottom-0 left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-b-2xl sm:rounded-b-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Enhanced CSS Animation */}
+                <style jsx>{`
+                  @keyframes marquee {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                  }
+                  .marquee {
+                    animation: marquee 40s linear infinite;
+                  }
+                  .marquee:hover {
+                    animation-play-state: paused;
+                  }
+                  @media (max-width: 640px) {
+                    .marquee {
+                      animation: marquee 30s linear infinite;
+                    }
+                  }
+                `}</style>
+              </div>
+            );
+          })()}
+
+          {/* Responsive Stats Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-12 sm:mt-16 lg:mt-20 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8"
+          >
+            <div className="text-center">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-1 sm:mb-2">10,000+</div>
+              <div className="text-sm sm:text-base text-slate-600">Happy Restaurants</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-1 sm:mb-2">50M+</div>
+              <div className="text-sm sm:text-base text-slate-600">Orders Processed</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-1 sm:mb-2">4.9/5</div>
+              <div className="text-sm sm:text-base text-slate-600">Average Rating</div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Enhanced FAQ Section */}
+      <section id="faq" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full opacity-30 blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-indigo-100 to-blue-100 rounded-full opacity-30 blur-3xl translate-y-1/2 -translate-x-1/4"></div>
+        
+        <div className="max-w-5xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-700 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium border border-purple-100 shadow-sm mb-3 sm:mb-4">
+              <ShieldCheck className="w-4 h-4 text-purple-500" />
+              <span>Help & Support</span>
+            </div>
+            
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-3 sm:mb-4">
+              Frequently Asked <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">Questions</span>
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto px-2 sm:px-0">
+              Everything you need to know about QuickBiteQR. Can't find what you're looking for? 
+              <Link href="/contact" className="text-purple-600 hover:text-purple-700 font-medium ml-1">
+                Contact our support team
+              </Link>
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="space-y-3 sm:space-y-4"
+          >
+            {[
+              {
+                question: "How quickly can I set up QuickBiteQR?",
+                answer: "Setup takes less than 5 minutes. Simply create your account, add your menu items, and generate QR codes for your tables. No technical knowledge required.",
+                category: "Setup",
+                icon: <Clock className="w-5 h-5" />
+              },
+              {
+                question: "Do customers need to download an app?",
+                answer: "No! Customers simply scan the QR code with their phone's camera and access your menu instantly through their web browser. No app downloads required.",
+                category: "Customer Experience",
+                icon: <Smartphone className="w-5 h-5" />
+              },
+              {
+                question: "Can I customize the menu design?",
+                answer: "Yes! You can customize colors, fonts, and layout to match your restaurant's branding. We also offer white-label options for complete customization.",
+                category: "Customization",
+                icon: <Award className="w-5 h-5" />
+              },
+              {
+                question: "Is there a limit on orders or tables?",
+                answer: "Our free plan supports up to 5 tables. Pro and Business plans offer unlimited tables and orders with advanced features.",
+                category: "Pricing",
+                icon: <Users className="w-5 h-5" />
+              },
+              {
+                question: "How do payments work?",
+                answer: "We integrate with popular payment processors like Razorpay and Stripe. Customers can pay directly through the menu interface with secure, encrypted transactions.",
+                category: "Payments",
+                icon: <ShieldCheck className="w-5 h-5" />
+              },
+              {
+                question: "Can I track my restaurant's performance?",
+                answer: "Absolutely! Our analytics dashboard provides insights on popular items, peak hours, average order values, and customer preferences to help you optimize your business.",
+                category: "Analytics",
+                icon: <Zap className="w-5 h-5" />
+              },
+              {
+                question: "What if I need help or support?",
+                answer: "We offer comprehensive support through email, live chat, and phone. Pro and Business customers get priority support with dedicated account managers.",
+                category: "Support",
+                icon: <Server className="w-5 h-5" />
+              },
+              {
+                question: "Can I integrate with my existing POS system?",
+                answer: "Yes! We support integrations with most popular POS systems including Square, Toast, Clover, and more. Our API also allows custom integrations.",
+                category: "Integrations",
+                icon: <Building2 className="w-5 h-5" />
+              }
+            ].map((faq, idx) => (
+              <motion.div
+                key={idx}
+                variants={fadeInUp}
+                whileHover={{ y: -2, scale: 1.01 }}
+                className="group bg-white rounded-2xl border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+              >
+                <div className="p-5 sm:p-6 lg:p-8">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    {/* Icon */}
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-xl flex items-center justify-center text-purple-600 group-hover:from-purple-200 group-hover:to-indigo-200 transition-colors duration-300">
+                      {faq.icon}
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                        <h3 className="text-base sm:text-lg font-semibold text-slate-900 group-hover:text-purple-700 transition-colors">
+                          {faq.question}
+                        </h3>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+                          {faq.category}
+                        </span>
+                      </div>
+                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
+                        {faq.answer}
+                      </p>
+                    </div>
+                    
+                    {/* Expand Icon */}
+                    <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-slate-100 rounded-lg flex items-center justify-center group-hover:bg-slate-200 transition-colors duration-300">
+                      <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500 group-hover:text-slate-700 transition-colors" />
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Decorative bottom border */}
+                <div className="h-1 bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Additional Help Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-16 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 lg:p-12 border border-purple-100"
+          >
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <ShieldCheck className="w-8 h-8 text-white" />
+              </div>
+              
+              <h3 className="text-2xl font-bold text-slate-900 mb-4">
+                Still have questions?
+              </h3>
+              <p className="text-slate-600 mb-8 max-w-2xl mx-auto">
+                Our support team is here to help you get the most out of QuickBiteQR. 
+                Get in touch and we'll respond within 24 hours.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link 
+                  href="/contact" 
+                  className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                >
+                  Contact Support
+                  <ArrowRight className="inline-block ml-2 w-5 h-5" />
+                </Link>
+                <Link 
+                  href="/help" 
+                  className="text-purple-600 border-2 border-purple-200 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-purple-50 hover:border-purple-300 transition-all duration-200"
+                >
+                  Help Center
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-indigo-600 relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Ready to Transform Your Restaurant?
+            </h2>
+            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+              Join thousands of restaurants already using QuickBiteQR to provide exceptional dining experiences.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link 
+                href="/login?next=%2Fdashboard" 
+                className="bg-white text-blue-600 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-slate-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              >
+                Start Free Trial
+                <ArrowRight className="inline-block ml-2 w-5 h-5" />
+              </Link>
+              <Link 
+                href="#features" 
+                className="text-white border-2 border-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white/10 transition-all duration-200"
+              >
+                Learn More
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-slate-900 text-white py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="col-span-1 md:col-span-2">
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                  <QrCode className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-xl font-bold">QuickBiteQR</span>
+              </div>
+              <p className="text-slate-400 mb-6 max-w-md">
+                Revolutionizing restaurant dining with seamless QR code ordering. 
+                Transform your customer experience in minutes.
+              </p>
+              <div className="flex space-x-4">
+                <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors cursor-pointer">
+                  <span className="text-sm font-semibold">f</span>
+                </div>
+                <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors cursor-pointer">
+                  <span className="text-sm font-semibold">t</span>
+                </div>
+                <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors cursor-pointer">
+                  <span className="text-sm font-semibold">in</span>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Product</h3>
+              <ul className="space-y-3">
+                <li><Link href="#features" className="text-slate-400 hover:text-white transition-colors">Features</Link></li>
+                <li><Link href="#pricing" className="text-slate-400 hover:text-white transition-colors">Pricing</Link></li>
+                <li><Link href="/dashboard" className="text-slate-400 hover:text-white transition-colors">Dashboard</Link></li>
+                <li><Link href="/api" className="text-slate-400 hover:text-white transition-colors">API</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Resources</h3>
+              <ul className="space-y-3">
+                <li><Link href="#faq" className="text-slate-400 hover:text-white transition-colors">FAQ</Link></li>
+                <li><Link href="/help" className="text-slate-400 hover:text-white transition-colors">Help Center</Link></li>
+                <li><Link href="/blog" className="text-slate-400 hover:text-white transition-colors">Blog</Link></li>
+                <li><Link href="/contact" className="text-slate-400 hover:text-white transition-colors">Contact</Link></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-slate-400 text-sm">
+              © 2025 QuickBiteQR. All rights reserved.
+            </p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <Link href="/privacy" className="text-slate-400 hover:text-white text-sm transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="text-slate-400 hover:text-white text-sm transition-colors">Terms of Service</Link>
+              <Link href="/cookies" className="text-slate-400 hover:text-white text-sm transition-colors">Cookie Policy</Link>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
