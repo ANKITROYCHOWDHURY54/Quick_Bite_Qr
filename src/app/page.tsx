@@ -5,7 +5,6 @@
 import { motion } from "framer-motion";
 import { QrCode, Smartphone, Clock, Users, ArrowRight, Star, CheckCircle2, ShieldCheck, Zap, Server, Building2, Utensils, ChevronRight, Award, Sparkles, Menu, X, BarChart3, CreditCard, UserPlus, ClipboardList, Settings, LayoutDashboard, MapPin } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
@@ -381,7 +380,7 @@ export default function Home() {
                     <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span className="text-sm text-slate-500 ml-2">QuickBiteQR Demo</span>
+                    <span className="text-sm text-slate-500 ml-2">QuickBiteQR</span>
                   </div>
                   <h3 className="font-semibold text-slate-900 mb-2">See it in action</h3>
                   <p className="text-sm text-slate-600">
@@ -552,35 +551,61 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Owner Toolbar */}
+          {/* Eye-catching Owner Toolbar */}
           <div className="mb-8">
-            <div className="bg-white/80 backdrop-blur-md border border-slate-200 rounded-2xl shadow-sm p-3 sm:p-4 flex flex-wrap gap-2 sm:gap-3 justify-center">
-              <Link href="/login?next=%2Fdashboard%2Ftables" className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-900 transition-colors">
-                <QrCode className="w-4 h-4" /> Generate QR
-              </Link>
-              <Link href="/login?next=%2Fdashboard%2Fmenu" className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-900 transition-colors">
-                <Utensils className="w-4 h-4" /> Add Items
-              </Link>
-              <Link href="/login?next=%2Fdashboard%2Forders" className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-900 transition-colors">
-                <ClipboardList className="w-4 h-4" /> View Orders
-              </Link>
-              <Link href="/login?next=%2Fdashboard" className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transition-colors">
-                <LayoutDashboard className="w-4 h-4" /> Open Dashboard
-              </Link>
-            </div>
-            {/* Where these buttons go */}
-            <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-              {[ 
-                { label: 'Generate QR', path: 'Dashboard › Tables', note: 'Create unlimited tables & print QRs' },
-                { label: 'Add Items', path: 'Dashboard › Menu', note: 'Add/edit items, prices, photos' },
-                { label: 'View Orders', path: 'Dashboard › Orders', note: 'See live orders & statuses' },
-                { label: 'Open Dashboard', path: 'Dashboard', note: 'Revenue, analytics, quick actions' },
-              ].map((i, idx) => (
-                <div key={idx} className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs sm:text-sm">
-                  <div className="font-semibold text-slate-800">{i.path}</div>
-                  <div className="text-slate-600">{i.note}</div>
-                </div>
-              ))}
+            <div className="relative bg-gradient-to-r from-slate-50 to-blue-50 border border-slate-200 rounded-3xl shadow-lg p-6 sm:p-8 overflow-hidden">
+              {/* Background decorative elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-full opacity-20 blur-xl"></div>
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-tr from-purple-400 to-pink-400 rounded-full opacity-15 blur-2xl"></div>
+              
+              {/* Header */}
+              <div className="text-center mb-6 relative z-10">
+                <h3 className="text-xl font-bold text-slate-900 mb-2">Quick Actions</h3>
+                <p className="text-slate-600">Get started with these essential tools</p>
+              </div>
+              
+              {/* Action buttons */}
+              <div className="flex flex-wrap gap-4 sm:gap-5 justify-center relative z-10">
+                <Link 
+                  href="/login?next=%2Fdashboard%2Ftables" 
+                  className="group inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-white border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1"
+                >
+                  <div className="p-2 rounded-xl bg-gradient-to-r from-blue-100 to-blue-200 text-blue-600 group-hover:from-blue-200 group-hover:to-blue-300 transition-all duration-300">
+                    <QrCode className="w-5 h-5" />
+                  </div>
+                  <span className="font-semibold">Generate QR</span>
+                </Link>
+                
+                <Link 
+                  href="/login?next=%2Fdashboard%2Fmenu" 
+                  className="group inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-white border-2 border-green-200 hover:border-green-400 hover:bg-green-50 text-slate-700 hover:text-green-700 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1"
+                >
+                  <div className="p-2 rounded-xl bg-gradient-to-r from-green-100 to-green-200 text-green-600 group-hover:from-green-200 group-hover:to-green-300 transition-all duration-300">
+                    <Utensils className="w-5 h-5" />
+                  </div>
+                  <span className="font-semibold">Add Items</span>
+                </Link>
+                
+                <Link 
+                  href="/login?next=%2Fdashboard%2Forders" 
+                  className="group inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-white border-2 border-purple-200 hover:border-purple-400 hover:bg-purple-50 text-slate-700 hover:text-purple-700 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1"
+                >
+                  <div className="p-2 rounded-xl bg-gradient-to-r from-purple-100 to-purple-200 text-purple-600 group-hover:from-purple-200 group-hover:to-purple-300 transition-all duration-300">
+                    <ClipboardList className="w-5 h-5" />
+                  </div>
+                  <span className="font-semibold">View Orders</span>
+                </Link>
+                
+                <Link 
+                  href="/login?next=%2Fdashboard" 
+                  className="group inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 border-2 border-blue-500"
+                >
+                  <div className="p-2 rounded-xl bg-white/20 text-white group-hover:bg-white/30 transition-all duration-300">
+                    <LayoutDashboard className="w-5 h-5" />
+                  </div>
+                  <span className="font-semibold">Open Dashboard</span>
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -596,48 +621,112 @@ export default function Home() {
                 title: 'Unlimited QR Codes (No Table Limit)',
                 desc: 'Generate unique QR codes for every table or zone without any limit. Print, place, and start taking orders instantly.',
                 icon: <QrCode className="w-6 h-6" />,
+                gradient: 'from-blue-500 to-cyan-500',
+                bgGradient: 'from-blue-50 to-cyan-50',
+                iconBg: 'from-blue-100 to-cyan-100',
+                iconColor: 'text-blue-600',
+                borderColor: 'border-blue-200',
+                hoverBorder: 'hover:border-blue-300',
               },
               {
                 title: 'Take Orders from Table',
                 desc: 'Guests scan and order right from their table. Orders appear live in your dashboard so staff can prepare faster.',
                 icon: <Users className="w-6 h-6" />,
+                gradient: 'from-emerald-500 to-green-500',
+                bgGradient: 'from-emerald-50 to-green-50',
+                iconBg: 'from-emerald-100 to-green-100',
+                iconColor: 'text-emerald-600',
+                borderColor: 'border-emerald-200',
+                hoverBorder: 'hover:border-emerald-300',
               },
               {
                 title: 'Realtime Dashboard & Revenue',
                 desc: 'Track total revenue, live orders, best sellers, and peak hours with a beautiful, real‑time dashboard.',
                 icon: <BarChart3 className="w-6 h-6" />,
+                gradient: 'from-purple-500 to-indigo-500',
+                bgGradient: 'from-purple-50 to-indigo-50',
+                iconBg: 'from-purple-100 to-indigo-100',
+                iconColor: 'text-purple-600',
+                borderColor: 'border-purple-200',
+                hoverBorder: 'hover:border-purple-300',
               },
               {
                 title: 'Easy Menu Management',
                 desc: 'Add, edit, and hide items in seconds. Manage photos, prices, and availability without disrupting service.',
                 icon: <Utensils className="w-6 h-6" />,
+                gradient: 'from-orange-500 to-red-500',
+                bgGradient: 'from-orange-50 to-red-50',
+                iconBg: 'from-orange-100 to-red-100',
+                iconColor: 'text-orange-600',
+                borderColor: 'border-orange-200',
+                hoverBorder: 'hover:border-orange-300',
               },
               {
                 title: 'Prepaid or Pay on Table',
                 desc: 'Offer prepaid checkout or let customers pay at the table. Flexible flows to match your operations.',
                 icon: <CreditCard className="w-6 h-6" />,
+                gradient: 'from-teal-500 to-cyan-500',
+                bgGradient: 'from-teal-50 to-cyan-50',
+                iconBg: 'from-teal-100 to-cyan-100',
+                iconColor: 'text-teal-600',
+                borderColor: 'border-teal-200',
+                hoverBorder: 'hover:border-teal-300',
               },
               {
                 title: 'Insights & Analytics',
                 desc: 'Understand what sells, when it sells, and who orders it. Make decisions backed by clear data.',
                 icon: <Sparkles className="w-6 h-6" />,
+                gradient: 'from-pink-500 to-rose-500',
+                bgGradient: 'from-pink-50 to-rose-50',
+                iconBg: 'from-pink-100 to-rose-100',
+                iconColor: 'text-pink-600',
+                borderColor: 'border-pink-200',
+                hoverBorder: 'hover:border-pink-300',
               },
             ].map((f, i) => (
               <motion.div
                 key={i}
                 variants={fadeInUp}
-                whileHover={{ y: -4, scale: 1.01 }}
-                className="bg-white rounded-2xl border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-lg transition-all duration-300 p-5 sm:p-6 lg:p-8"
+                whileHover={{ y: -8, scale: 1.02 }}
+                className={`relative group bg-gradient-to-br ${f.bgGradient} rounded-3xl border-2 ${f.borderColor} ${f.hoverBorder} shadow-lg hover:shadow-2xl transition-all duration-500 p-6 sm:p-7 lg:p-8 overflow-hidden`}
               >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2.5 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100 text-slate-700">
-                    {f.icon}
+                {/* Background decorative elements */}
+                <div className={`absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br ${f.gradient} rounded-full opacity-10 blur-xl group-hover:opacity-20 transition-opacity duration-500`}></div>
+                <div className={`absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-tr ${f.gradient} rounded-full opacity-5 blur-2xl group-hover:opacity-15 transition-opacity duration-500`}></div>
+                
+                {/* Card content */}
+                <div className="relative z-10">
+                  {/* Icon and title section */}
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className={`p-3 rounded-2xl bg-gradient-to-r ${f.iconBg} ${f.iconColor} shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110`}>
+                      {f.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-slate-800 transition-colors duration-300 leading-tight">
+                        {f.title}
+                      </h3>
+                    </div>
                   </div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-slate-900">{f.title}</h3>
+                  
+                  {/* Description */}
+                  <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6 group-hover:text-slate-700 transition-colors duration-300">
+                    {f.desc}
+                  </p>
+                  
+                  {/* Action indicator */}
+                  <div className="flex items-center justify-between">
+                    <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${f.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                      <ArrowRight className="w-4 h-4 text-white" />
+                    </div>
+                    <div className={`h-1 w-12 bg-gradient-to-r ${f.gradient} rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
+                  </div>
                 </div>
-                <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                  {f.desc}
-                </p>
+                
+                {/* Hover effect overlay */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${f.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-3xl`}></div>
+                
+                {/* Bottom accent line */}
+                <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${f.gradient} rounded-b-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
               </motion.div>
             ))}
           </motion.div>
@@ -1307,30 +1396,7 @@ export default function Home() {
                 category: "Pricing",
                 icon: <Users className="w-5 h-5" />
               },
-              {
-                question: "How do payments work?",
-                answer: "We integrate with popular payment processors like Razorpay and Stripe. Customers can pay directly through the menu interface with secure, encrypted transactions.",
-                category: "Payments",
-                icon: <ShieldCheck className="w-5 h-5" />
-              },
-              {
-                question: "Can I track my restaurant's performance?",
-                answer: "Absolutely! Our analytics dashboard provides insights on popular items, peak hours, average order values, and customer preferences to help you optimize your business.",
-                category: "Analytics",
-                icon: <Zap className="w-5 h-5" />
-              },
-              {
-                question: "What if I need help or support?",
-                answer: "We offer comprehensive support through email, live chat, and phone. Pro and Business customers get priority support with dedicated account managers.",
-                category: "Support",
-                icon: <Server className="w-5 h-5" />
-              },
-              {
-                question: "Can I integrate with my existing POS system?",
-                answer: "Yes! We support integrations with most popular POS systems including Square, Toast, Clover, and more. Our API also allows custom integrations.",
-                category: "Integrations",
-                icon: <Building2 className="w-5 h-5" />
-              }
+             
             ].map((faq, idx) => (
               <motion.div
                 key={idx}
