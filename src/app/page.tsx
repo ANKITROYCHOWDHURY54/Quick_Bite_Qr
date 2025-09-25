@@ -419,13 +419,19 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <motion.ol
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8"
-          >
+          <div className="relative">
+            {/* Decorative progress line on large screens */}
+            <div className="hidden lg:block absolute inset-x-2 top-1/2 -translate-y-1/2 h-1 bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 rounded-full"></div>
+            {/* Vertical mobile timeline */}
+            <div className="md:hidden absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-100 to-indigo-100 rounded-full"></div>
+
+            <motion.ol
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8"
+            >
             {[
               {
                 step: 1,
@@ -471,8 +477,14 @@ export default function Home() {
               <motion.li
                 key={i}
                 variants={fadeInUp}
-                className="relative bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 p-5 sm:p-6 lg:p-8 flex flex-col"
+                className="relative group bg-white rounded-2xl border-2 border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-xl transition-all duration-300 p-5 sm:p-6 lg:p-8 md:pl-6 pl-10 flex flex-col"
               >
+                {/* Mobile connector dot */}
+                <div className="md:hidden absolute left-3 top-8 w-2 h-2 rounded-full bg-indigo-500"></div>
+                {/* Step number badge */}
+                <div className="absolute -top-4 left-6 md:left-1/2 md:-translate-x-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex items-center justify-center text-sm sm:text-base font-bold shadow-lg">
+                  {s.step}
+                </div>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 flex items-center justify-center">
                     {s.icon}
@@ -480,16 +492,17 @@ export default function Home() {
                   <div className="text-sm font-semibold text-emerald-700">Step {s.step}</div>
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold text-slate-900 mb-2">{s.title}</h3>
-                <p className="text-slate-600 text-sm sm:text-base leading-relaxed flex-1">{s.desc}</p>
-                <div className="mt-4">
-              <Link href={`/login?next=${encodeURIComponent(s.href)}`} className="inline-flex items-center text-emerald-700 hover:text-emerald-800 text-sm font-semibold">
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed flex-1 mb-2">{s.desc}</p>
+                <div className="mt-3">
+              <Link href={`/login?next=${encodeURIComponent(s.href)}`} aria-label={`Step ${s.step}: ${s.action}`} className="inline-flex md:inline-flex items-center text-emerald-700 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-md px-2 py-2 -mx-1 text-sm font-semibold transition-colors w-full sm:w-auto justify-center">
                     {s.action}
                     <ChevronRight className="w-4 h-4 ml-1" />
                   </Link>
                 </div>
               </motion.li>
             ))}
-          </motion.ol>
+            </motion.ol>
+          </div>
 
           {/* Visual map of where things live */}
           <motion.div
@@ -565,10 +578,11 @@ export default function Home() {
               </div>
               
               {/* Action buttons */}
-              <div className="flex flex-wrap gap-4 sm:gap-5 justify-center relative z-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">
                 <Link 
                   href="/login?next=%2Fdashboard%2Ftables" 
-                  className="group inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-white border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1"
+                  className="group w-full h-full inline-flex items-center justify-start gap-3 p-5 sm:p-6 rounded-2xl bg-white border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 min-h-[72px]"
+                  aria-label="Generate QR codes"
                 >
                   <div className="p-2 rounded-xl bg-gradient-to-r from-blue-100 to-blue-200 text-blue-600 group-hover:from-blue-200 group-hover:to-blue-300 transition-all duration-300">
                     <QrCode className="w-5 h-5" />
@@ -578,7 +592,8 @@ export default function Home() {
                 
                 <Link 
                   href="/login?next=%2Fdashboard%2Fmenu" 
-                  className="group inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-white border-2 border-green-200 hover:border-green-400 hover:bg-green-50 text-slate-700 hover:text-green-700 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1"
+                  className="group w-full h-full inline-flex items-center justify-start gap-3 p-5 sm:p-6 rounded-2xl bg-white border-2 border-green-200 hover:border-green-400 hover:bg-green-50 text-slate-700 hover:text-green-700 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 min-h-[72px]"
+                  aria-label="Add menu items"
                 >
                   <div className="p-2 rounded-xl bg-gradient-to-r from-green-100 to-green-200 text-green-600 group-hover:from-green-200 group-hover:to-green-300 transition-all duration-300">
                     <Utensils className="w-5 h-5" />
@@ -588,7 +603,8 @@ export default function Home() {
                 
                 <Link 
                   href="/login?next=%2Fdashboard%2Forders" 
-                  className="group inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-white border-2 border-purple-200 hover:border-purple-400 hover:bg-purple-50 text-slate-700 hover:text-purple-700 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1"
+                  className="group w-full h-full inline-flex items-center justify-start gap-3 p-5 sm:p-6 rounded-2xl bg-white border-2 border-purple-200 hover:border-purple-400 hover:bg-purple-50 text-slate-700 hover:text-purple-700 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 min-h-[72px]"
+                  aria-label="View live orders"
                 >
                   <div className="p-2 rounded-xl bg-gradient-to-r from-purple-100 to-purple-200 text-purple-600 group-hover:from-purple-200 group-hover:to-purple-300 transition-all duration-300">
                     <ClipboardList className="w-5 h-5" />
@@ -598,7 +614,8 @@ export default function Home() {
                 
                 <Link 
                   href="/login?next=%2Fdashboard" 
-                  className="group inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 border-2 border-blue-500"
+                  className="group w-full h-full inline-flex items-center justify-start gap-3 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 border-2 border-blue-500 min-h-[72px]"
+                  aria-label="Open dashboard"
                 >
                   <div className="p-2 rounded-xl bg-white/20 text-white group-hover:bg-white/30 transition-all duration-300">
                     <LayoutDashboard className="w-5 h-5" />
@@ -1295,14 +1312,14 @@ export default function Home() {
                     100% { transform: translateX(-50%); }
                   }
                   .marquee {
-                    animation: marquee 40s linear infinite;
+                    animation: marquee 20s linear infinite;
                   }
                   .marquee:hover {
                     animation-play-state: paused;
                   }
                   @media (max-width: 640px) {
                     .marquee {
-                      animation: marquee 30s linear infinite;
+                      animation: marquee 15s linear infinite;
                     }
                   }
                 `}</style>
