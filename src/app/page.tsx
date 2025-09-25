@@ -14,6 +14,7 @@ export default function Home() {
   const intervalRef = useRef<number | null>(null);
   const [activeSection, setActiveSection] = useState<string>("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
 
 
@@ -40,6 +41,16 @@ export default function Home() {
       }
     };
   }, []);
+
+	// Detect scroll to enhance navbar visuals
+	useEffect(() => {
+		const onScroll = () => {
+			setScrolled(window.scrollY > 10);
+		};
+		onScroll();
+		window.addEventListener("scroll", onScroll, { passive: true });
+		return () => window.removeEventListener("scroll", onScroll);
+	}, []);
 
   // Track active section for navbar highlighting
   useEffect(() => {
@@ -93,9 +104,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Enhanced Responsive Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+      <nav className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-md border-slate-200 shadow-sm' : 'bg-white/30 backdrop-blur border-transparent'}`}>
+        <a href="#features" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-1/2 focus:-translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded-lg shadow-lg">Skip to content</a>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className={`flex justify-between items-center transition-all duration-300 ${scrolled ? 'h-14' : 'h-16'}`}>
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-2">
@@ -108,46 +120,56 @@ export default function Home() {
             
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
-              <Link 
-                href="#features" 
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  activeSection === 'features' 
-                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                Features
-              </Link>
+              
               <Link 
                 href="#owners" 
-                className={`text-sm font-medium transition-colors duration-200 ${
+                aria-current={activeSection === 'owners' ? 'page' : undefined}
+                className={`group relative text-sm font-medium transition-colors duration-200 ${
                   activeSection === 'owners' 
-                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
+                    ? 'text-slate-900' 
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                Owners
+                <span className="px-1">Owners</span>
+                <span className={`pointer-events-none absolute -bottom-2 left-0 h-[2px] w-full rounded-full transition-all duration-300 ${activeSection === 'owners' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 opacity-100' : 'opacity-0 group-hover:opacity-100 bg-slate-300'}`}></span>
+              </Link>
+
+              <Link 
+                href="#features" 
+                aria-current={activeSection === 'features' ? 'page' : undefined}
+                className={`group relative text-sm font-medium transition-colors duration-200 ${
+                  activeSection === 'features' 
+                    ? 'text-slate-900' 
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <span className="px-1">Features</span>
+                <span className={`pointer-events-none absolute -bottom-2 left-0 h-[2px] w-full rounded-full transition-all duration-300 ${activeSection === 'features' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 opacity-100' : 'opacity-0 group-hover:opacity-100 bg-slate-300'}`}></span>
               </Link>
               
               <Link 
                 href="#pricing" 
-                className={`text-sm font-medium transition-colors duration-200 ${
+                aria-current={activeSection === 'pricing' ? 'page' : undefined}
+                className={`group relative text-sm font-medium transition-colors duration-200 ${
                   activeSection === 'pricing' 
-                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
+                    ? 'text-slate-900' 
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                Pricing
+                <span className="px-1">Pricing</span>
+                <span className={`pointer-events-none absolute -bottom-2 left-0 h-[2px] w-full rounded-full transition-all duration-300 ${activeSection === 'pricing' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 opacity-100' : 'opacity-0 group-hover:opacity-100 bg-slate-300'}`}></span>
               </Link>
               <Link 
                 href="#faq" 
-                className={`text-sm font-medium transition-colors duration-200 ${
+                aria-current={activeSection === 'faq' ? 'page' : undefined}
+                className={`group relative text-sm font-medium transition-colors duration-200 ${
                   activeSection === 'faq' 
-                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
+                    ? 'text-slate-900' 
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                FAQ
+                <span className="px-1">FAQ</span>
+                <span className={`pointer-events-none absolute -bottom-2 left-0 h-[2px] w-full rounded-full transition-all duration-300 ${activeSection === 'faq' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 opacity-100' : 'opacity-0 group-hover:opacity-100 bg-slate-300'}`}></span>
               </Link>
             </div>
 
@@ -194,17 +216,7 @@ export default function Home() {
             <div className="py-4 space-y-4 border-t border-slate-200">
               {/* Mobile Navigation Links */}
               <div className="space-y-2">
-                <Link 
-                  href="#features" 
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
-                    activeSection === 'features' 
-                      ? 'text-blue-600 bg-blue-50' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
-                >
-                  Features
-                </Link>
+                
                 <Link 
                   href="#owners" 
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -215,6 +227,18 @@ export default function Home() {
                   }`}
                 >
                   Owners
+                </Link>
+
+                <Link 
+                  href="#features" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
+                    activeSection === 'features' 
+                      ? 'text-blue-600 bg-blue-50' 
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  }`}
+                >
+                  Features
                 </Link>
                 
                 <Link 
