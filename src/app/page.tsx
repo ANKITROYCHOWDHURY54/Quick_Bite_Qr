@@ -608,7 +608,7 @@ export default function Home() {
                       <span className="px-2 py-1 rounded-full bg-blue-600 text-white border border-blue-500 text-xs font-semibold">Get started</span>
                     </div>
                     <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Quick Actions</h3>
-                    <p className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">Jump right into the most-used tools</p>
+                    <p className="text-slate-900">Jump right into the most-used tools</p>
                   </div>
                 </div>
                 <div className="mt-4 h-1.5 rounded-full bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-amber-300 w-40 mx-auto opacity-100 qa-accent shadow-[0_0_12px_rgba(255,255,255,0.25)]"></div>
