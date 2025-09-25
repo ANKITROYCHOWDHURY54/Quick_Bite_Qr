@@ -50,11 +50,11 @@ export default function Home() {
 		onScroll();
 		window.addEventListener("scroll", onScroll, { passive: true });
 		return () => window.removeEventListener("scroll", onScroll);
-	}, []);
+  }, []);
 
   // Track active section for navbar highlighting
   useEffect(() => {
-    const sections = ["features", "owners", "pricing", "faq"];
+    const sections = ["how-it-works-owner", "features", "owners", "pricing", "faq"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -120,7 +120,20 @@ export default function Home() {
             
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
-              
+              {/* Steps */}
+              <Link 
+                href="#how-it-works-owner" 
+                aria-current={activeSection === 'how-it-works-owner' ? 'page' : undefined}
+                className={`group relative text-sm font-medium transition-colors duration-200 ${
+                  activeSection === 'how-it-works-owner' 
+                    ? 'text-slate-900' 
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <span className="px-1">Steps</span>
+                <span className={`pointer-events-none absolute -bottom-2 left-0 h-[2px] w-full rounded-full transition-all duration-300 ${activeSection === 'how-it-works-owner' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 opacity-100' : 'opacity-0 group-hover:opacity-100 bg-slate-300'}`}></span>
+              </Link>
+
               <Link 
                 href="#owners" 
                 aria-current={activeSection === 'owners' ? 'page' : undefined}
@@ -132,19 +145,6 @@ export default function Home() {
               >
                 <span className="px-1">Owners</span>
                 <span className={`pointer-events-none absolute -bottom-2 left-0 h-[2px] w-full rounded-full transition-all duration-300 ${activeSection === 'owners' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 opacity-100' : 'opacity-0 group-hover:opacity-100 bg-slate-300'}`}></span>
-              </Link>
-
-              <Link 
-                href="#features" 
-                aria-current={activeSection === 'features' ? 'page' : undefined}
-                className={`group relative text-sm font-medium transition-colors duration-200 ${
-                  activeSection === 'features' 
-                    ? 'text-slate-900' 
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <span className="px-1">Features</span>
-                <span className={`pointer-events-none absolute -bottom-2 left-0 h-[2px] w-full rounded-full transition-all duration-300 ${activeSection === 'features' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 opacity-100' : 'opacity-0 group-hover:opacity-100 bg-slate-300'}`}></span>
               </Link>
               
               <Link 
@@ -216,6 +216,17 @@ export default function Home() {
             <div className="py-4 space-y-4 border-t border-slate-200">
               {/* Mobile Navigation Links */}
               <div className="space-y-2">
+                <Link 
+                  href="#how-it-works-owner" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
+                    activeSection === 'how-it-works-owner' 
+                      ? 'text-blue-600 bg-blue-50' 
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  }`}
+                >
+                  Steps
+                </Link>
                 
                 <Link 
                   href="#owners" 
@@ -227,18 +238,6 @@ export default function Home() {
                   }`}
                 >
                   Owners
-                </Link>
-
-                <Link 
-                  href="#features" 
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
-                    activeSection === 'features' 
-                      ? 'text-blue-600 bg-blue-50' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
-                >
-                  Features
                 </Link>
                 
                 <Link 
@@ -422,7 +421,7 @@ export default function Home() {
       </section>
 
       {/* Step-by-step for Restaurant Owners */}
-      <section id="how-it-works-owner" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+      <section id="how-it-works-owner" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-100 via-indigo-50 to-white border-y border-slate-200 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -505,10 +504,6 @@ export default function Home() {
               >
                 {/* Mobile connector dot */}
                 <div className="md:hidden absolute left-3 top-8 w-2 h-2 rounded-full bg-indigo-500"></div>
-                {/* Step number badge */}
-                <div className="absolute -top-4 left-6 md:left-1/2 md:-translate-x-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex items-center justify-center text-sm sm:text-base font-bold shadow-lg">
-                  {s.step}
-                </div>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 flex items-center justify-center">
                     {s.icon}
@@ -542,7 +537,7 @@ export default function Home() {
       </section>
 
       {/* For Restaurant Owners */}
-      <section id="owners" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white relative">
+      <section id="owners" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-100 to-white border-t border-slate-200 relative">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -590,275 +585,365 @@ export default function Home() {
 
           {/* Eye-catching Owner Toolbar */}
           <div className="mb-8">
-            <div className="relative bg-gradient-to-r from-slate-50 to-blue-50 border border-slate-200 rounded-3xl shadow-lg p-6 sm:p-8 overflow-hidden">
+            {/* Gradient border wrapper for subtle premium feel */}
+            <div className="relative rounded-[calc(1.5rem-1.5px)] bg-slate-900/90 backdrop-blur-xl overflow-hidden qa-elevation">
+              <div className="relative bg-gradient-to-r from-slate-50 to-emerald-50 border border-slate-200 rounded-[calc(1.5rem-1px)] p-6 sm:p-8 overflow-hidden">
               {/* Background decorative elements */}
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-full opacity-20 blur-xl"></div>
               <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-tr from-purple-400 to-pink-400 rounded-full opacity-15 blur-2xl"></div>
+              {/* Subtle radial pattern */}
+              <div className="pointer-events-none absolute inset-0 opacity-60 [background:radial-gradient(60rem_60rem_at_-20%_-10%,rgba(59,130,246,0.06),transparent),radial-gradient(50rem_50rem_at_120%_10%,rgba(99,102,241,0.06),transparent)]"></div>
+              {/* Animated aurora backdrop */}
+              <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className="aurora one"></div>
+                <div className="aurora two"></div>
+                <div className="aurora three"></div>
+              </div>
               
               {/* Header */}
-              <div className="text-center mb-6 relative z-10">
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Quick Actions</h3>
-                <p className="text-slate-600">Get started with these essential tools</p>
+              <div className="relative z-10 px-6 sm:px-8 pt-4 sm:pt-6 pb-3">
+                <div className="flex flex-col items-center justify-center text-center gap-3">
+                  <div>
+                    <div className="inline-flex items-center gap-2 mb-1">
+                      <span className="px-2 py-1 rounded-full bg-blue-600 text-white border border-blue-500 text-xs font-semibold">Get started</span>
+                    </div>
+                    <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Quick Actions</h3>
+                    <p className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">Jump right into the most-used tools</p>
+                  </div>
+                </div>
+                <div className="mt-4 h-1.5 rounded-full bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-amber-300 w-40 mx-auto opacity-100 qa-accent shadow-[0_0_12px_rgba(255,255,255,0.25)]"></div>
               </div>
-              
               {/* Action buttons */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">
-                <Link 
-                  href="/login?next=%2Fdashboard%2Ftables" 
-                  className="group w-full h-full inline-flex items-center justify-start gap-3 p-5 sm:p-6 rounded-2xl bg-white border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 min-h-[72px]"
-                  aria-label="Generate QR codes"
-                >
-                  <div className="p-2 rounded-xl bg-gradient-to-r from-blue-100 to-blue-200 text-blue-600 group-hover:from-blue-200 group-hover:to-blue-300 transition-all duration-300">
-                    <QrCode className="w-5 h-5" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10" role="list" aria-label="Quick actions">
+                <div className="h-full rounded-2xl group" role="listitem">
+                  <div className="toolbar-card three-d card-delay-1 seq-1 relative h-full flex items-center justify-between gap-4 p-5 sm:p-6 rounded-[1rem] bg-gradient-to-br from-sky-200 to-cyan-300 text-slate-900 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-sky-400 focus-within:ring-offset-2 focus-within:ring-offset-white">
+                    <div className="flex items-center gap-3">
+                      <div className="icon-glow p-2 rounded-xl bg-gradient-to-r from-sky-100 to-cyan-100 text-sky-700 ring-1 ring-sky-200 shadow-sm">
+                    <QrCode className="w-6 h-6" />
                   </div>
+                      <div className="flex flex-col">
                   <span className="font-semibold">Generate QR</span>
-                </Link>
-                
-                <Link 
-                  href="/login?next=%2Fdashboard%2Fmenu" 
-                  className="group w-full h-full inline-flex items-center justify-start gap-3 p-5 sm:p-6 rounded-2xl bg-white border-2 border-green-200 hover:border-green-400 hover:bg-green-50 text-slate-700 hover:text-green-700 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 min-h-[72px]"
-                  aria-label="Add menu items"
-                >
-                  <div className="p-2 rounded-xl bg-gradient-to-r from-green-100 to-green-200 text-green-600 group-hover:from-green-200 group-hover:to-green-300 transition-all duration-300">
-                    <Utensils className="w-5 h-5" />
+                        <span className="text-sm text-slate-900 leading-relaxed font-medium">Create and print table codes</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Link href="/login?next=%2Fdashboard%2Ftables" aria-label="Generate QR codes" className="focus-visible:outline-none">
+                        <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center group-hover:bg-sky-600 group-hover:text-white transition-colors cursor-pointer">
+                          <ChevronRight className="w-4 h-4" />
+                        </div>
+                      </Link>
+                    </div>
                   </div>
+                </div>
+                
+                <div className="h-full rounded-2xl group" role="listitem">
+                  <div className="toolbar-card three-d card-delay-2 seq-2 relative h-full flex items-center justify-between gap-4 p-5 sm:p-6 rounded-[1rem] bg-gradient-to-br from-emerald-200 to-teal-300 text-slate-900 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-emerald-400 focus-within:ring-offset-2 focus-within:ring-offset-white">
+                    <div className="flex items-center gap-3">
+                      <div className="icon-glow p-2 rounded-xl bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-700 ring-1 ring-emerald-200 shadow-sm">
+                    <Utensils className="w-6 h-6" />
+                  </div>
+                      <div className="flex flex-col">
                   <span className="font-semibold">Add Items</span>
-                </Link>
-                
-                <Link 
-                  href="/login?next=%2Fdashboard%2Forders" 
-                  className="group w-full h-full inline-flex items-center justify-start gap-3 p-5 sm:p-6 rounded-2xl bg-white border-2 border-purple-200 hover:border-purple-400 hover:bg-purple-50 text-slate-700 hover:text-purple-700 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 min-h-[72px]"
-                  aria-label="View live orders"
-                >
-                  <div className="p-2 rounded-xl bg-gradient-to-r from-purple-100 to-purple-200 text-purple-600 group-hover:from-purple-200 group-hover:to-purple-300 transition-all duration-300">
-                    <ClipboardList className="w-5 h-5" />
+                        <span className="text-sm text-slate-900 leading-relaxed font-medium">Dishes, prices, photos</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Link href="/login?next=%2Fdashboard%2Fmenu" aria-label="Add menu items" className="focus-visible:outline-none">
+                        <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors cursor-pointer">
+                          <ChevronRight className="w-4 h-4" />
+                        </div>
+                      </Link>
+                    </div>
                   </div>
+                </div>
+                
+                <div className="h-full rounded-2xl group" role="listitem">
+                  <div className="toolbar-card three-d card-delay-3 seq-3 relative h-full flex items-center justify-between gap-4 p-5 sm:p-6 rounded-[1rem] bg-gradient-to-br from-fuchsia-200 to-violet-300 text-slate-900 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-fuchsia-400 focus-within:ring-offset-2 focus-within:ring-offset-white">
+                    <div className="flex items-center gap-3">
+                      <div className="icon-glow p-2 rounded-xl bg-gradient-to-r from-fuchsia-100 to-violet-100 text-fuchsia-700 ring-1 ring-fuchsia-200 shadow-sm">
+                    <ClipboardList className="w-6 h-6" />
+                  </div>
+                      <div className="flex flex-col">
                   <span className="font-semibold">View Orders</span>
-                </Link>
-                
-                <Link 
-                  href="/login?next=%2Fdashboard" 
-                  className="group w-full h-full inline-flex items-center justify-start gap-3 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 border-2 border-blue-500 min-h-[72px]"
-                  aria-label="Open dashboard"
-                >
-                  <div className="p-2 rounded-xl bg-white/20 text-white group-hover:bg-white/30 transition-all duration-300">
-                    <LayoutDashboard className="w-5 h-5" />
+                        <span className="text-sm text-slate-900 leading-relaxed font-medium">Live queue and updates</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Link href="/login?next=%2Fdashboard%2Forders" aria-label="View live orders" className="focus-visible:outline-none">
+                        <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center group-hover:bg-violet-600 group-hover:text-white transition-colors cursor-pointer">
+                          <ChevronRight className="w-4 h-4" />
+                        </div>
+                      </Link>
+                    </div>
                   </div>
+                </div>
+                
+                <div className="h-full rounded-2xl group" role="listitem">
+                  <div className="toolbar-card three-d card-delay-4 seq-4 relative h-full flex items-center justify-between gap-4 p-5 sm:p-6 rounded-[1rem] bg-gradient-to-r from-blue-600 to-indigo-600 text-white transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-white/60 focus-within:ring-offset-2 focus-within:ring-offset-blue-600">
+                    <div className="flex items-center gap-3">
+                      <div className="icon-glow p-2 rounded-xl bg.white/20 text-white">
+                    <LayoutDashboard className="w-6 h-6" />
+                  </div>
+                      <div className="flex flex-col">
                   <span className="font-semibold">Open Dashboard</span>
-                </Link>
+                        <span className="text-sm text.white leading-relaxed">Analytics and settings</span>
               </div>
-            </div>
+                    </div>
+                    <Link href="/login?next=%2Fdashboard" aria-label="Open dashboard" className="focus-visible:outline-none">
+                      <div className="w-8 h-8 rounded-full bg-white/15 text-white flex items-center justify-center group-hover:bg-white group-hover:text-blue-700 transition-colors cursor-pointer">
+                        <ChevronRight className="w-4 h-4" />
           </div>
-
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-          >
-            {[ 
-              {
-                title: 'Unlimited QR Codes (No Table Limit)',
-                desc: 'Generate unique QR codes for every table or zone without any limit. Print, place, and start taking orders instantly.',
-                icon: <QrCode className="w-6 h-6" />,
-                gradient: 'from-blue-500 to-cyan-500',
-                bgGradient: 'from-blue-50 to-cyan-50',
-                iconBg: 'from-blue-100 to-cyan-100',
-                iconColor: 'text-blue-600',
-                borderColor: 'border-blue-200',
-                hoverBorder: 'hover:border-blue-300',
-              },
-              {
-                title: 'Take Orders from Table',
-                desc: 'Guests scan and order right from their table. Orders appear live in your dashboard so staff can prepare faster.',
-                icon: <Users className="w-6 h-6" />,
-                gradient: 'from-emerald-500 to-green-500',
-                bgGradient: 'from-emerald-50 to-green-50',
-                iconBg: 'from-emerald-100 to-green-100',
-                iconColor: 'text-emerald-600',
-                borderColor: 'border-emerald-200',
-                hoverBorder: 'hover:border-emerald-300',
-              },
-              {
-                title: 'Realtime Dashboard & Revenue',
-                desc: 'Track total revenue, live orders, best sellers, and peak hours with a beautiful, real‑time dashboard.',
-                icon: <BarChart3 className="w-6 h-6" />,
-                gradient: 'from-purple-500 to-indigo-500',
-                bgGradient: 'from-purple-50 to-indigo-50',
-                iconBg: 'from-purple-100 to-indigo-100',
-                iconColor: 'text-purple-600',
-                borderColor: 'border-purple-200',
-                hoverBorder: 'hover:border-purple-300',
-              },
-              {
-                title: 'Easy Menu Management',
-                desc: 'Add, edit, and hide items in seconds. Manage photos, prices, and availability without disrupting service.',
-                icon: <Utensils className="w-6 h-6" />,
-                gradient: 'from-orange-500 to-red-500',
-                bgGradient: 'from-orange-50 to-red-50',
-                iconBg: 'from-orange-100 to-red-100',
-                iconColor: 'text-orange-600',
-                borderColor: 'border-orange-200',
-                hoverBorder: 'hover:border-orange-300',
-              },
-              {
-                title: 'Prepaid or Pay on Table',
-                desc: 'Offer prepaid checkout or let customers pay at the table. Flexible flows to match your operations.',
-                icon: <CreditCard className="w-6 h-6" />,
-                gradient: 'from-teal-500 to-cyan-500',
-                bgGradient: 'from-teal-50 to-cyan-50',
-                iconBg: 'from-teal-100 to-cyan-100',
-                iconColor: 'text-teal-600',
-                borderColor: 'border-teal-200',
-                hoverBorder: 'hover:border-teal-300',
-              },
-              {
-                title: 'Insights & Analytics',
-                desc: 'Understand what sells, when it sells, and who orders it. Make decisions backed by clear data.',
-                icon: <Sparkles className="w-6 h-6" />,
-                gradient: 'from-pink-500 to-rose-500',
-                bgGradient: 'from-pink-50 to-rose-50',
-                iconBg: 'from-pink-100 to-rose-100',
-                iconColor: 'text-pink-600',
-                borderColor: 'border-pink-200',
-                hoverBorder: 'hover:border-pink-300',
-              },
-            ].map((f, i) => (
-              <motion.div
-                key={i}
-                variants={fadeInUp}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className={`relative group bg-gradient-to-br ${f.bgGradient} rounded-3xl border-2 ${f.borderColor} ${f.hoverBorder} shadow-lg hover:shadow-2xl transition-all duration-500 p-6 sm:p-7 lg:p-8 overflow-hidden`}
-              >
-                {/* Background decorative elements */}
-                <div className={`absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br ${f.gradient} rounded-full opacity-10 blur-xl group-hover:opacity-20 transition-opacity duration-500`}></div>
-                <div className={`absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-tr ${f.gradient} rounded-full opacity-5 blur-2xl group-hover:opacity-15 transition-opacity duration-500`}></div>
-                
-                {/* Card content */}
-                <div className="relative z-10">
-                  {/* Icon and title section */}
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className={`p-3 rounded-2xl bg-gradient-to-r ${f.iconBg} ${f.iconColor} shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110`}>
-                      {f.icon}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-slate-800 transition-colors duration-300 leading-tight">
-                        {f.title}
-                      </h3>
-                    </div>
-                  </div>
-                  
-                  {/* Description */}
-                  <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6 group-hover:text-slate-700 transition-colors duration-300">
-                    {f.desc}
-                  </p>
-                  
-                  {/* Action indicator */}
-                  <div className="flex items-center justify-between">
-                    <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${f.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                      <ArrowRight className="w-4 h-4 text-white" />
-                    </div>
-                    <div className={`h-1 w-12 bg-gradient-to-r ${f.gradient} rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
+                    </Link>
                   </div>
                 </div>
-                
-                {/* Hover effect overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${f.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-3xl`}></div>
-                
-                {/* Bottom accent line */}
-                <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${f.gradient} rounded-b-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
-              </motion.div>
-            ))}
-          </motion.div>
+                  </div>
+              {/* Toolbar styles */}
+              <style jsx>{`
+                @keyframes auroraMove {
+                  0% { transform: translate(-10%, -10%) scale(1); opacity: 0.6; }
+                  50% { transform: translate(10%, 10%) scale(1.1); opacity: 0.9; }
+                  100% { transform: translate(-10%, -10%) scale(1); opacity: 0.6; }
+                }
+                .aurora {
+                  position: absolute;
+                  filter: blur(40px);
+                  opacity: 0.5;
+                  mix-blend-mode: multiply;
+                  animation: auroraMove 16s linear infinite;
+                }
+                .aurora.one { top: -20%; left: -10%; width: 50%; height: 60%; background: radial-gradient(60% 60% at 50% 50%, rgba(16,185,129,0.28), transparent); }
+                .aurora.two { bottom: -25%; right: -15%; width: 55%; height: 65%; background: radial-gradient(60% 60% at 50% 50%, rgba(20,184,166,0.28), transparent); animation-duration: 20s; }
+                .aurora.three { top: 10%; right: 10%; width: 35%; height: 40%; background: radial-gradient(60% 60% at 50% 50%, rgba(132,204,22,0.20), transparent); animation-duration: 24s; }
+
+                .toolbar-card::before {
+                  content: "";
+                  position: absolute;
+                  inset: 0;
+                  border-radius: inherit;
+                  background: linear-gradient(120deg, rgba(255,255,255,0.0) 40%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.0) 60%);
+                  transform: translateX(-120%);
+                  transition: transform 0.6s ease;
+                  pointer-events: none;
+                }
+                .toolbar-card:hover::before { transform: translateX(120%); }
+
+                @keyframes gradientBorderShift {
+                  0% { filter: hue-rotate(0deg); }
+                  100% { filter: hue-rotate(20deg); }
+                }
+                .border-animate { animation: gradientBorderShift 6s linear infinite alternate; }
+
+                /* Non-hover animations */
+                @keyframes cardFloat {
+                  0% { transform: translateY(0px); }
+                  50% { transform: translateY(-3px); }
+                  100% { transform: translateY(0px); }
+                }
+                /* Remove float animation, rely on hover micro-interactions */
+                .toolbar-card { animation: none; }
+                .card-delay-1, .card-delay-2, .card-delay-3, .card-delay-4 { animation-delay: 0s; }
+
+                /* Sequential scale pulse (one by one) - more pronounced */
+                @keyframes seqPulse {
+                  0%, 100% {
+                    transform: scale(1) translateZ(0);
+                    box-shadow: 0 18px 30px -12px rgba(2,6,23,0.30), 0 8px 16px -8px rgba(2,6,23,0.22), inset 0 1px 0 0 rgba(255,255,255,0.6);
+                  }
+                  50% {
+                    transform: scale(1.04) translateZ(0);
+                    box-shadow: 0 28px 60px -18px rgba(2,6,23,0.45), 0 16px 30px -12px rgba(2,6,23,0.32), inset 0 1px 0 0 rgba(255,255,255,0.6);
+                  }
+                }
+                /* Disable scale pulse */
+                .seq-1, .seq-2, .seq-3, .seq-4 { animation: none !important; transform-origin: center; }
+
+                /* Disable icon motion to keep only border movement */
+                .icon-glow { animation: none; }
+
+                /* Border sheen animation */
+                @keyframes borderSheen {
+                  0% { background-position: 0% 50%; }
+                  100% { background-position: 200% 50%; }
+                }
+                .shine-border { position: relative; }
+                .shine-border::before {
+                  content: "";
+                  position: absolute;
+                  inset: 0;
+                  border-radius: inherit;
+                  background-image: linear-gradient(90deg, rgba(255,255,255,0.25), rgba(255,255,255,0.05), rgba(255,255,255,0.25));
+                  background-size: 200% 100%;
+                  animation: borderSheen 4s linear infinite;
+                  pointer-events: none;
+                }
+
+                @keyframes conicSpin {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(360deg); }
+                }
+                .conic-rotate {
+                  background: var(--ring-gradient);
+                  animation: none;
+                }
+
+                /* 3D effect without hover */
+                .three-d {
+                  transform: perspective(1200px) rotateX(1.2deg) rotateY(-1.2deg) translateZ(0);
+                  box-shadow:
+                    0 18px 30px -12px rgba(2,6,23,0.35),
+                    0 8px 16px -8px rgba(2,6,23,0.25),
+                    inset 0 1px 0 0 rgba(255,255,255,0.6);
+                  will-change: transform;
+                }
+
+                /* Respect motion preferences */
+                @media (prefers-reduced-motion: reduce) {
+                  .aurora { display: none; }
+                  .toolbar-card::before { transition: none; }
+                  .seq-1, .seq-2, .seq-3, .seq-4 { animation: none !important; }
+                }
+              `}</style>
+              <style jsx>{`
+                .qa-elevation {
+                  box-shadow:
+                    0 20px 50px -20px rgba(2,6,23,0.55),
+                    0 8px 24px -10px rgba(2,6,23,0.35),
+                    0 0 0 1px rgba(255,255,255,0.04);
+                }
+                @keyframes barFlow {
+                  0% { background-position: 200% 50%; }
+                  100% { background-position: -100% 50%; }
+                }
+                .qa-accent {
+                  background-size: 400% 100%;
+                  animation: barFlow 3.5s linear infinite;
+                  will-change: background-position;
+                }
+              `}</style>
+              {/* Animated gradient border around action cards */}
+              <style jsx>{`
+                @keyframes toolbarBarFlow {
+                  0% { background-position: 200% 50%; }
+                  100% { background-position: -100% 50%; }
+                }
+                .toolbar-card { position: relative; }
+                .toolbar-card::after {
+                  content: none !important;
+                  display: none !important;
+                  animation: none !important;
+                  background: none !important;
+                }
+                /* Also disable the sheen overlay */
+                .toolbar-card::before { display: none !important; }
+              `}</style>
+              {/* Per-card themed borders matching tile colors (target any direct child) */}
+              <style jsx>{`
+                [role="list"][aria-label="Quick actions"] > *:nth-child(1) .toolbar-card::after {
+                  background: linear-gradient(90deg, rgba(56,189,248,1), rgba(34,211,238,1), rgba(14,165,233,1)) !important; /* sky/cyan/blue */
+                }
+                [role="list"][aria-label="Quick actions"] > *:nth-child(2) .toolbar-card::after {
+                  background: linear-gradient(90deg, rgba(52,211,153,1), rgba(16,185,129,1), rgba(20,184,166,1)) !important; /* emerald/teal */
+                }
+                [role="list"][aria-label="Quick actions"] > *:nth-child(3) .toolbar-card::after {
+                  background: linear-gradient(90deg, rgba(240,171,252,1), rgba(217,70,239,1), rgba(139,92,246,1)) !important; /* fuchsia/violet */
+                }
+                [role="list"][aria-label="Quick actions"] > *:nth-child(4) .toolbar-card::after {
+                  background: linear-gradient(90deg, rgba(96,165,250,1), rgba(37,99,235,1), rgba(79,70,229,1)) !important; /* blue/indigo */
+                }
+              `}</style>
+              {/* Subtle 3D elevation and bevel for cards */}
+              <style jsx>{`
+                .toolbar-card {
+                  transform-style: preserve-3d;
+                  box-shadow:
+                    0 12px 18px -10px rgba(2,6,23,0.45),
+                    0 30px 60px -24px rgba(2,6,23,0.35),
+                    inset 0 1px 0 rgba(255,255,255,0.55),
+                    inset 0 -1px 0 rgba(2,6,23,0.06);
+                  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+                }
+                .toolbar-card:hover {
+                  box-shadow:
+                    0 16px 24px -12px rgba(2,6,23,0.5),
+                    0 40px 80px -28px rgba(2,6,23,0.38),
+                    inset 0 1px 0 rgba(255,255,255,0.6),
+                    inset 0 -1px 0 rgba(2,6,23,0.08);
+                  transform: translateY(-3px);
+                }
+                .toolbar-card:focus-within {
+                  transform: translateY(-2px);
+                  box-shadow:
+                    0 16px 26px -12px rgba(2,6,23,0.52),
+                    0 44px 84px -30px rgba(2,6,23,0.40),
+                    inset 0 1px 0 rgba(255,255,255,0.65),
+                    inset 0 -1px 0 rgba(2,6,23,0.10);
+                }
+
+                /* Color-tinted inner ring on hover/focus for each card */
+                [role="list"][aria-label="Quick actions"] .toolbar-card:nth-of-type(1):hover,
+                [role="list"][aria-label="Quick actions"] .toolbar-card:nth-of-type(1):focus-within {
+                  box-shadow:
+                    0 16px 26px -12px rgba(2,6,23,0.5),
+                    0 44px 84px -30px rgba(2,6,23,0.38),
+                    inset 0 0 0 2px rgba(56,189,248,0.35),
+                    inset 0 1px 0 rgba(255,255,255,0.65),
+                    inset 0 -1px 0 rgba(2,6,23,0.10);
+                }
+                [role="list"][aria-label="Quick actions"] .toolbar-card:nth-of-type(2):hover,
+                [role="list"][aria-label="Quick actions"] .toolbar-card:nth-of-type(2):focus-within {
+                  box-shadow:
+                    0 16px 26px -12px rgba(2,6,23,0.5),
+                    0 44px 84px -30px rgba(2,6,23,0.38),
+                    inset 0 0 0 2px rgba(16,185,129,0.35),
+                    inset 0 1px 0 rgba(255,255,255,0.65),
+                    inset 0 -1px 0 rgba(2,6,23,0.10);
+                }
+                [role="list"][aria-label="Quick actions"] .toolbar-card:nth-of-type(3):hover,
+                [role="list"][aria-label="Quick actions"] .toolbar-card:nth-of-type(3):focus-within {
+                  box-shadow:
+                    0 16px 26px -12px rgba(2,6,23,0.5),
+                    0 44px 84px -30px rgba(2,6,23,0.38),
+                    inset 0 0 0 2px rgba(217,70,239,0.35),
+                    inset 0 1px 0 rgba(255,255,255,0.65),
+                    inset 0 -1px 0 rgba(2,6,23,0.10);
+                }
+                [role="list"][aria-label="Quick actions"] .toolbar-card:nth-of-type(4):hover,
+                [role="list"][aria-label="Quick actions"] .toolbar-card:nth-of-type(4):focus-within {
+                  box-shadow:
+                    0 16px 26px -12px rgba(2,6,23,0.5),
+                    0 44px 84px -30px rgba(2,6,23,0.38),
+                    inset 0 0 0 2px rgba(37,99,235,0.35),
+                    inset 0 1px 0 rgba(255,255,255,0.65),
+                    inset 0 -1px 0 rgba(2,6,23,0.10);
+                }
+              `}</style>
+              {/* Bring back sliding sheen inside cards (override disable with stronger selector) */}
+              <style jsx>{`
+                [role="list"][aria-label="Quick actions"] .toolbar-card::before {
+                  content: "" !important;
+                  display: block !important;
+                  position: absolute;
+                  inset: 0;
+                  border-radius: inherit;
+                  background: linear-gradient(120deg, rgba(255,255,255,0.0) 35%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.0) 65%);
+                  transform: translateX(-130%);
+                  transition: transform .8s ease;
+                  pointer-events: none;
+                }
+                [role="list"][aria-label="Quick actions"] .toolbar-card:hover::before,
+                [role="list"][aria-label="Quick actions"] .toolbar-card:focus-within::before {
+                  transform: translateX(130%);
+                }
+              `}</style>
+                  </div>
+                </div>
+                </div>
         </div>
       </section>
 
-      {/* Enhanced Features Section */}
-      <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50 relative">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-50 to-indigo-50 text-indigo-700 px-4 py-2 rounded-full text-sm font-medium border border-indigo-100 shadow-sm mb-4">
-              <Sparkles className="w-4 h-4 text-indigo-500" />
-              <span>Powerful and easy to use</span>
-            </div>
-            
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">
-              Everything you need to <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">modernize</span> your restaurant
-            </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              From QR code generation to real-time order management, we provide all the tools you need to create an exceptional dining experience.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {[
-              {
-                icon: <QrCode className="w-8 h-8 text-blue-600" />,
-                title: "Instant QR Codes",
-                desc: "Generate unique QR codes for each table in seconds. No technical knowledge required."
-              },
-              {
-                icon: <Smartphone className="w-8 h-8 text-green-600" />,
-                title: "Mobile-First Design",
-                desc: "Beautiful, responsive menus that work perfectly on any device your customers use."
-              },
-              {
-                icon: <Clock className="w-8 h-8 text-purple-600" />,
-                title: "Real-Time Orders",
-                desc: "See orders as they come in with live updates and instant notifications."
-              },
-              {
-                icon: <Users className="w-8 h-8 text-orange-600" />,
-                title: "Staff Management",
-                desc: "Assign orders to staff members and track preparation times effortlessly."
-              },
-              {
-                icon: <ShieldCheck className="w-8 h-8 text-red-600" />,
-                title: "Secure Payments",
-                desc: "Integrated payment processing with industry-standard security and fraud protection."
-              },
-              {
-                icon: <Award className="w-8 h-8 text-indigo-600" />,
-                title: "Analytics Dashboard",
-                desc: "Track sales, popular items, and customer preferences with detailed insights."
-              }
-            ].map((s, idx) => (
-              <motion.div
-                key={idx}
-                variants={fadeInUp}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 group"
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="p-3 rounded-xl bg-slate-50 group-hover:bg-slate-100 transition-colors">
-                    {s.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-slate-900">{s.title}</h3>
-                </div>
-                <div className="mt-4 flex items-start gap-3 text-slate-600">
-                  <p className="text-sm leading-6">{s.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
       {/* Product Mockup Section (Simplified) */}
-      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-100 to-white border-y border-slate-200">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -948,7 +1033,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced Pricing Section */}
-      <section id="pricing" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+      <section id="pricing" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-emerald-100 via-green-50 to-white border-y border-slate-200 relative overflow-hidden">
         {/* Background decorative elements */}
         <div className="absolute top-0 right-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full opacity-30 blur-3xl -translate-y-1/2 translate-x-1/4"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-tr from-purple-100 to-pink-100 rounded-full opacity-30 blur-3xl translate-y-1/2 -translate-x-1/4"></div>
@@ -1179,7 +1264,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced Responsive Testimonials Section */}
-      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50 relative overflow-hidden">
+      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-100 border-y border-slate-200 relative overflow-hidden">
         {/* Background decorative elements */}
         <div className="absolute top-0 right-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-br from-amber-100 to-orange-100 rounded-full opacity-30 blur-3xl -translate-y-1/2 translate-x-1/4"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-tr from-blue-100 to-indigo-100 rounded-full opacity-30 blur-3xl translate-y-1/2 -translate-x-1/4"></div>
@@ -1376,7 +1461,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced FAQ Section */}
-      <section id="faq" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+      <section id="faq" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-100 to-white border-y border-slate-200 relative overflow-hidden">
         {/* Background decorative elements */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full opacity-30 blur-3xl -translate-y-1/2 translate-x-1/4"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-indigo-100 to-blue-100 rounded-full opacity-30 blur-3xl translate-y-1/2 -translate-x-1/4"></div>
@@ -1557,7 +1642,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-white py-16 px-4 sm:px-6 lg:px-8">
+      <footer className="bg-gradient-to-b from-slate-900 to-slate-950 text-white py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2">
