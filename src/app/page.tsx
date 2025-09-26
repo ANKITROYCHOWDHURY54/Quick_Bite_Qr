@@ -25,7 +25,7 @@ export default function Home() {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    const speedPxPerSec = 120;
+    const speedPxPerSec = 60;
     const stepPx = Math.max(1, Math.round(speedPxPerSec / 60));
     intervalRef.current = window.setInterval(() => {
       if (!node) return;
@@ -1354,13 +1354,13 @@ export default function Home() {
                 {/* Removed manualScrollBy navigation buttons as the function was unused and deleted */}
 
                 {/* Responsive Testimonials Carousel */}
-                <div className="overflow-hidden px-1 pb-2 pr-4 sm:pr-6 lg:pr-8">
-                  <div className="flex gap-3 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 marquee will-change-transform">
-                    {[...testimonials, ...testimonials].map((t, i) => (
+                <div ref={testimonialsTrackRef} className="overflow-x-auto sm:overflow-hidden px-1 pb-2 pr-4 sm:pr-6 lg:pr-8">
+                  <div className="flex gap-3 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 sm:marquee will-change-transform snap-x snap-mandatory">
+                    {testimonials.map((t, i) => (
                       <motion.div
                         key={i}
                         whileHover={{ y: -4, scale: 1.01 }}
-                        className="shrink-0 w-[85%] xs:w-[75%] sm:w-[65%] md:w-[55%] lg:w-[45%] xl:w-[35%] 2xl:w-[30%] group"
+                        className="shrink-0 w-[85%] xs:w-[75%] sm:w-[65%] md:w-[55%] lg:w-[45%] xl:w-[35%] 2xl:w-[30%] group snap-center"
                       >
                         <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 lg:p-8 xl:p-10 shadow-md sm:shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:border-slate-300 relative overflow-hidden h-full">
                           {/* Quote Icon */}
