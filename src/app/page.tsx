@@ -601,102 +601,197 @@ export default function Home() {
               </div>
               
               {/* Header */}
-              <div className="relative z-10 px-6 sm:px-8 pt-4 sm:pt-6 pb-3">
-                <div className="flex flex-col items-center justify-center text-center gap-3">
-                  <div>
-                    <div className="inline-flex items-center gap-2 mb-1">
-                      <span className="px-2 py-1 rounded-full bg-blue-600 text-white border border-blue-500 text-xs font-semibold">Get started</span>
+              <div className="relative z-10 px-4 sm:px-6 md:px-8 pt-4 sm:pt-6 md:pt-8 pb-4 sm:pb-6">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="flex flex-col items-center justify-center text-center gap-3 sm:gap-4"
+                >
+                  <div className="relative">
+                    <div className="absolute -top-8 sm:-top-10 -left-8 sm:-left-10 w-16 sm:w-20 h-16 sm:h-20 bg-blue-400/20 rounded-full blur-xl"></div>
+                    <div className="absolute -bottom-6 sm:-bottom-8 -right-6 sm:-right-8 w-12 sm:w-16 h-12 sm:h-16 bg-indigo-500/20 rounded-full blur-xl"></div>
+                    <div className="inline-flex items-center gap-2 mb-2">
+                      <span className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white border border-blue-500/30 text-xs font-semibold shadow-sm">Restaurant Tools</span>
                     </div>
-                    <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Quick Actions</h3>
-                    <p className="text-slate-900">Jump right into the most-used tools</p>
+                    <h3 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-1 sm:mb-2">Quick Actions</h3>
+                    <p className="text-slate-700 text-base sm:text-lg max-w-xs sm:max-w-sm md:max-w-md mx-auto">Everything you need to manage your restaurant in one place</p>
                   </div>
-                </div>
-                <div className="mt-4 h-1.5 rounded-full bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-amber-300 w-40 mx-auto opacity-100 qa-accent shadow-[0_0_12px_rgba(255,255,255,0.25)]"></div>
+                </motion.div>
+                <div className="mt-4 sm:mt-6 h-1.5 sm:h-2 rounded-full bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-amber-300 w-36 sm:w-48 mx-auto opacity-100 qa-accent shadow-[0_0_16px_rgba(255,255,255,0.35)]"></div>
               </div>
+              
               {/* Action buttons */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10" role="list" aria-label="Quick actions">
-                <div className="h-full rounded-2xl group" role="listitem">
-                  <div className="toolbar-card three-d card-delay-1 seq-1 relative h-full flex items-center justify-between gap-4 p-5 sm:p-6 rounded-[1rem] bg-gradient-to-br from-sky-200 to-cyan-300 text-slate-900 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-sky-400 focus-within:ring-offset-2 focus-within:ring-offset-white">
-                    <div className="flex items-center gap-3">
-                      <div className="icon-glow p-2 rounded-xl bg-gradient-to-r from-sky-100 to-cyan-100 text-sky-700 ring-1 ring-sky-200 shadow-sm">
-                    <QrCode className="w-6 h-6" />
-                  </div>
-                      <div className="flex flex-col">
-                  <span className="font-semibold">Generate QR</span>
-                        <span className="text-sm text-slate-900 leading-relaxed font-medium">Create and print table codes</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 relative z-10 px-3 sm:px-4 md:px-6" role="list" aria-label="Quick actions">
+                <motion.div 
+                  className="h-full rounded-2xl group" 
+                  role="listitem"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                  whileHover={{ y: -8, scale: 1.03 }}
+                >
+                  <div className="toolbar-card three-d card-delay-1 seq-1 relative h-full flex flex-col gap-3 sm:gap-4 md:gap-5 p-5 sm:p-6 md:p-7 lg:p-8 rounded-xl sm:rounded-2xl md:rounded-[1.5rem] bg-gradient-to-br from-sky-200 to-cyan-300 text-slate-900 transition-all duration-300 shadow-lg hover:shadow-2xl focus-within:ring-2 focus-within:ring-sky-400 focus-within:ring-offset-2 focus-within:ring-offset-white overflow-hidden">
+                    {/* Enhanced decorative elements */}
+                    <div className="absolute top-0 right-0 w-24 sm:w-28 md:w-32 h-24 sm:h-28 md:h-32 bg-white/30 rounded-full blur-2xl -mr-8 sm:-mr-10 -mt-8 sm:-mt-10 opacity-70"></div>
+                    <div className="absolute bottom-0 left-0 w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 bg-sky-400/40 rounded-full blur-xl -ml-6 sm:-ml-8 -mb-6 sm:-mb-8"></div>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 sm:w-36 md:w-40 h-32 sm:h-36 md:h-40 bg-gradient-to-br from-cyan-200 to-sky-300 rounded-full opacity-20 blur-3xl"></div>
+                    
+                    <div className="flex flex-col gap-2 sm:gap-3">
+                      <div className="icon-glow p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-sky-100 to-cyan-100 text-sky-700 ring-1 ring-sky-200 shadow-md w-fit">
+                        <QrCode className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />
                       </div>
+                      <h4 className="text-lg sm:text-xl font-bold text-slate-900">Generate QR Codes</h4>
+                      <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">Create custom QR codes for each table to streamline ordering</p>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Link href="/login?next=%2Fdashboard%2Ftables" aria-label="Generate QR codes" className="focus-visible:outline-none">
-                        <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center group-hover:bg-sky-600 group-hover:text-white transition-colors cursor-pointer">
-                          <ChevronRight className="w-4 h-4" />
-                        </div>
+                    
+                    <div className="mt-auto pt-2">
+                      <Link 
+                        href="/login?next=%2Fdashboard%2Ftables" 
+                        aria-label="Generate QR codes" 
+                        className="inline-flex items-center justify-between w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-sky-600/90 text-white text-sm sm:text-base font-medium hover:bg-sky-700 transition-all duration-300 group-hover:shadow-md"
+                      >
+                        <span>Create QR Codes</span>
+                        <motion.span 
+                          initial={{ x: 0 }}
+                          whileHover={{ x: 4 }}
+                          transition={{ type: "spring", stiffness: 400 }}
+                        >
+                          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                        </motion.span>
                       </Link>
                     </div>
                   </div>
-                </div>
+                </motion.div>
                 
-                <div className="h-full rounded-2xl group" role="listitem">
-                  <div className="toolbar-card three-d card-delay-2 seq-2 relative h-full flex items-center justify-between gap-4 p-5 sm:p-6 rounded-[1rem] bg-gradient-to-br from-emerald-200 to-teal-300 text-slate-900 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-emerald-400 focus-within:ring-offset-2 focus-within:ring-offset-white">
-                    <div className="flex items-center gap-3">
-                      <div className="icon-glow p-2 rounded-xl bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-700 ring-1 ring-emerald-200 shadow-sm">
-                    <Utensils className="w-6 h-6" />
-                  </div>
-                      <div className="flex flex-col">
-                  <span className="font-semibold">Add Items</span>
-                        <span className="text-sm text-slate-900 leading-relaxed font-medium">Dishes, prices, photos</span>
+                <motion.div 
+                  className="h-full rounded-2xl group" 
+                  role="listitem"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                  whileHover={{ y: -8, scale: 1.03 }}
+                >
+                  <div className="toolbar-card three-d card-delay-2 seq-2 relative h-full flex flex-col gap-3 sm:gap-4 md:gap-5 p-5 sm:p-6 md:p-7 lg:p-8 rounded-xl sm:rounded-2xl md:rounded-[1.5rem] bg-gradient-to-br from-emerald-200 to-teal-300 text-slate-900 transition-all duration-300 shadow-lg hover:shadow-2xl focus-within:ring-2 focus-within:ring-emerald-400 focus-within:ring-offset-2 focus-within:ring-offset-white overflow-hidden">
+                    {/* Enhanced decorative elements */}
+                    <div className="absolute top-0 right-0 w-24 sm:w-28 md:w-32 h-24 sm:h-28 md:h-32 bg-white/30 rounded-full blur-2xl -mr-8 sm:-mr-10 -mt-8 sm:-mt-10 opacity-70"></div>
+                    <div className="absolute bottom-0 left-0 w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 bg-emerald-400/40 rounded-full blur-xl -ml-6 sm:-ml-8 -mb-6 sm:-mb-8"></div>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 sm:w-36 md:w-40 h-32 sm:h-36 md:h-40 bg-gradient-to-br from-teal-200 to-emerald-300 rounded-full opacity-20 blur-3xl"></div>
+                    
+                    <div className="flex flex-col gap-2 sm:gap-3">
+                      <div className="icon-glow p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-700 ring-1 ring-emerald-200 shadow-md w-fit">
+                        <Utensils className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />
                       </div>
+                      <h4 className="text-lg sm:text-xl font-bold text-slate-900">Manage Menu</h4>
+                      <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">Create and update your menu with dishes, prices, and photos</p>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Link href="/login?next=%2Fdashboard%2Fmenu" aria-label="Add menu items" className="focus-visible:outline-none">
-                        <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors cursor-pointer">
-                          <ChevronRight className="w-4 h-4" />
-                        </div>
+                    
+                    <div className="mt-auto pt-2">
+                      <Link 
+                        href="/login?next=%2Fdashboard%2Fmenu" 
+                        aria-label="Add menu items" 
+                        className="inline-flex items-center justify-between w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-emerald-600/90 text-white text-sm sm:text-base font-medium hover:bg-emerald-700 transition-all duration-300 group-hover:shadow-md"
+                      >
+                        <span>Edit Menu Items</span>
+                        <motion.span 
+                          initial={{ x: 0 }}
+                          whileHover={{ x: 4 }}
+                          transition={{ type: "spring", stiffness: 400 }}
+                        >
+                          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                        </motion.span>
                       </Link>
                     </div>
                   </div>
-                </div>
+                </motion.div>
                 
-                <div className="h-full rounded-2xl group" role="listitem">
-                  <div className="toolbar-card three-d card-delay-3 seq-3 relative h-full flex items-center justify-between gap-4 p-5 sm:p-6 rounded-[1rem] bg-gradient-to-br from-fuchsia-200 to-violet-300 text-slate-900 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-fuchsia-400 focus-within:ring-offset-2 focus-within:ring-offset-white">
-                    <div className="flex items-center gap-3">
-                      <div className="icon-glow p-2 rounded-xl bg-gradient-to-r from-fuchsia-100 to-violet-100 text-fuchsia-700 ring-1 ring-fuchsia-200 shadow-sm">
-                    <ClipboardList className="w-6 h-6" />
-                  </div>
-                      <div className="flex flex-col">
-                  <span className="font-semibold">View Orders</span>
-                        <span className="text-sm text-slate-900 leading-relaxed font-medium">Live queue and updates</span>
+                <motion.div 
+                  className="h-full rounded-2xl group" 
+                  role="listitem"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.3 }}
+                  whileHover={{ y: -8, scale: 1.03 }}
+                >
+                  <div className="toolbar-card three-d card-delay-3 seq-3 relative h-full flex flex-col gap-3 sm:gap-4 md:gap-5 p-5 sm:p-6 md:p-7 lg:p-8 rounded-xl sm:rounded-2xl md:rounded-[1.5rem] bg-gradient-to-br from-fuchsia-200 to-violet-300 text-slate-900 transition-all duration-300 shadow-lg hover:shadow-2xl focus-within:ring-2 focus-within:ring-fuchsia-400 focus-within:ring-offset-2 focus-within:ring-offset-white overflow-hidden">
+                    {/* Enhanced decorative elements */}
+                    <div className="absolute top-0 right-0 w-24 sm:w-28 md:w-32 h-24 sm:h-28 md:h-32 bg-white/30 rounded-full blur-2xl -mr-8 sm:-mr-10 -mt-8 sm:-mt-10 opacity-70"></div>
+                    <div className="absolute bottom-0 left-0 w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 bg-fuchsia-400/40 rounded-full blur-xl -ml-6 sm:-ml-8 -mb-6 sm:-mb-8"></div>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 sm:w-36 md:w-40 h-32 sm:h-36 md:h-40 bg-gradient-to-br from-violet-200 to-fuchsia-300 rounded-full opacity-20 blur-3xl"></div>
+                    
+                    <div className="flex flex-col gap-2 sm:gap-3">
+                      <div className="icon-glow p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-fuchsia-100 to-violet-100 text-fuchsia-700 ring-1 ring-fuchsia-200 shadow-md w-fit">
+                        <ClipboardList className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />
                       </div>
+                      <h4 className="text-lg sm:text-xl font-bold text-slate-900">Track Orders</h4>
+                      <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">Monitor live orders and manage your queue in real-time</p>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Link href="/login?next=%2Fdashboard%2Forders" aria-label="View live orders" className="focus-visible:outline-none">
-                        <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center group-hover:bg-violet-600 group-hover:text-white transition-colors cursor-pointer">
-                          <ChevronRight className="w-4 h-4" />
-                        </div>
+                    
+                    <div className="mt-auto pt-2">
+                      <Link 
+                        href="/login?next=%2Fdashboard%2Forders" 
+                        aria-label="View live orders" 
+                        className="inline-flex items-center justify-between w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-fuchsia-600/90 text-white text-sm sm:text-base font-medium hover:bg-fuchsia-700 transition-all duration-300 group-hover:shadow-md"
+                      >
+                        <span>View Live Orders</span>
+                        <motion.span 
+                          initial={{ x: 0 }}
+                          whileHover={{ x: 4 }}
+                          transition={{ type: "spring", stiffness: 400 }}
+                        >
+                          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                        </motion.span>
                       </Link>
                     </div>
                   </div>
-                </div>
+                </motion.div>
                 
-                <div className="h-full rounded-2xl group" role="listitem">
-                  <div className="toolbar-card three-d card-delay-4 seq-4 relative h-full flex items-center justify-between gap-4 p-5 sm:p-6 rounded-[1rem] bg-gradient-to-r from-blue-600 to-indigo-600 text-white transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-white/60 focus-within:ring-offset-2 focus-within:ring-offset-blue-600">
-                    <div className="flex items-center gap-3">
-                      <div className="icon-glow p-2 rounded-xl bg.white/20 text-white">
-                    <LayoutDashboard className="w-6 h-6" />
+                <motion.div 
+                  className="h-full rounded-2xl group" 
+                  role="listitem"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.4 }}
+                  whileHover={{ y: -8, scale: 1.03 }}
+                >
+                  <div className="toolbar-card three-d card-delay-4 seq-4 relative h-full flex flex-col gap-3 sm:gap-4 md:gap-5 p-5 sm:p-6 md:p-7 lg:p-8 rounded-xl sm:rounded-2xl md:rounded-[1.5rem] bg-gradient-to-r from-blue-600 to-indigo-600 text-white transition-all duration-300 shadow-lg hover:shadow-2xl focus-within:ring-2 focus-within:ring-white/60 focus-within:ring-offset-2 focus-within:ring-offset-blue-600 overflow-hidden">
+                    {/* Enhanced decorative elements */}
+                    <div className="absolute top-0 right-0 w-24 sm:w-28 md:w-32 h-24 sm:h-28 md:h-32 bg-white/20 rounded-full blur-2xl -mr-8 sm:-mr-10 -mt-8 sm:-mt-10"></div>
+                    <div className="absolute bottom-0 left-0 w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 bg-indigo-300/30 rounded-full blur-xl -ml-6 sm:-ml-8 -mb-6 sm:-mb-8"></div>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 sm:w-36 md:w-40 h-32 sm:h-36 md:h-40 bg-gradient-to-br from-indigo-500/30 to-blue-500/30 rounded-full blur-3xl"></div>
+                    
+                    <div className="flex flex-col gap-2 sm:gap-3">
+                      <div className="icon-glow p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/20 text-white ring-1 ring-white/30 shadow-md w-fit">
+                        <LayoutDashboard className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />
+                      </div>
+                      <h4 className="text-lg sm:text-xl font-bold text-white">Main Dashboard</h4>
+                      <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-medium">Access analytics, settings, and all restaurant management tools</p>
+                    </div>
+                    
+                    <div className="mt-auto pt-2">
+                      <Link 
+                        href="/login?next=%2Fdashboard" 
+                        aria-label="Open dashboard" 
+                        className="inline-flex items-center justify-between w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-white/20 text-white text-sm sm:text-base font-medium hover:bg-white/30 transition-all duration-300 group-hover:shadow-md"
+                      >
+                        <span>Open Dashboard</span>
+                        <motion.span 
+                          initial={{ x: 0 }}
+                          whileHover={{ x: 4 }}
+                          transition={{ type: "spring", stiffness: 400 }}
+                        >
+                          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                        </motion.span>
+                      </Link>
+                    </div>
                   </div>
-                      <div className="flex flex-col">
-                  <span className="font-semibold">Open Dashboard</span>
-                        <span className="text-sm text.white leading-relaxed">Analytics and settings</span>
+                </motion.div>
               </div>
-                    </div>
-                    <Link href="/login?next=%2Fdashboard" aria-label="Open dashboard" className="focus-visible:outline-none">
-                      <div className="w-8 h-8 rounded-full bg-white/15 text-white flex items-center justify-center group-hover:bg-white group-hover:text-blue-700 transition-colors cursor-pointer">
-                        <ChevronRight className="w-4 h-4" />
-          </div>
-                    </Link>
-                  </div>
-                </div>
-                  </div>
               {/* Toolbar styles */}
               <style jsx>{`
                 @keyframes auroraMove {
