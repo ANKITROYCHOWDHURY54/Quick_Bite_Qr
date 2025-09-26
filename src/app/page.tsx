@@ -623,7 +623,7 @@ export default function Home() {
               </div>
               
               {/* Action buttons */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 relative z-10 px-3 sm:px-4 md:px-6" role="list" aria-label="Quick actions">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 sm:gap-6 md:gap-6 lg:gap-8 relative z-10 px-4 sm:px-4 md:px-6" role="list" aria-label="Quick actions">
                 <motion.div 
                   className="h-full rounded-2xl group" 
                   role="listitem"
@@ -889,6 +889,18 @@ export default function Home() {
                     0 8px 16px -8px rgba(2,6,23,0.25),
                     inset 0 1px 0 0 rgba(255,255,255,0.6);
                   will-change: transform;
+                }
+
+                /* Enhanced 3D effect for mobile only */
+                @media (max-width: 640px) {
+                  .three-d {
+                    transform: perspective(800px) rotateX(2.5deg) rotateY(-2.5deg) translateZ(8px);
+                    box-shadow:
+                      0 25px 40px -15px rgba(2,6,23,0.45),
+                      0 12px 20px -10px rgba(2,6,23,0.35),
+                      0 4px 8px -4px rgba(2,6,23,0.25),
+                      inset 0 1px 0 0 rgba(255,255,255,0.7);
+                  }
                 }
 
                 /* Respect motion preferences */
