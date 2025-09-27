@@ -7,6 +7,8 @@ import { QrCode, Smartphone, Clock, Users, ArrowRight, Star, CheckCircle2, Shiel
 import Link from "next/link";
 import { useRef, useEffect, useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import ContactModal from "@/components/ContactModal";
+import HelpModal from "@/components/HelpModal";
 
 export default function Home() {
   const testimonialsTrackRef = useRef<HTMLDivElement | null>(null);
@@ -15,6 +17,8 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState<string>("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
 
 
 
@@ -179,7 +183,7 @@ export default function Home() {
                 href="/login" 
                 className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
               >
-                Sign In
+                Login
               </Link>
               <Link 
                 href="/signup" 
@@ -1694,19 +1698,19 @@ export default function Home() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link 
-                  href="/contact" 
+                <button 
+                  onClick={() => setIsContactModalOpen(true)}
                   className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                 >
                   Contact Support
                   <ArrowRight className="inline-block ml-2 w-5 h-5" />
-                </Link>
-                <Link 
-                  href="/help" 
+                </button>
+                <button 
+                  onClick={() => setIsHelpModalOpen(true)}
                   className="text-purple-600 border-2 border-purple-200 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-purple-50 hover:border-purple-300 transition-all duration-200"
                 >
                   Help Center
-                </Link>
+                </button>
               </div>
             </div>
           </motion.div>
@@ -1781,8 +1785,8 @@ export default function Home() {
               <ul className="space-y-3">
                 <li><Link href="#features" className="text-slate-400 hover:text-white transition-colors">Features</Link></li>
                 <li><Link href="#pricing" className="text-slate-400 hover:text-white transition-colors">Pricing</Link></li>
-                <li><Link href="/dashboard" className="text-slate-400 hover:text-white transition-colors">Dashboard</Link></li>
-                <li><Link href="/api" className="text-slate-400 hover:text-white transition-colors">API</Link></li>
+                <li><Link href="/login?next=%2Fdashboard" className="text-slate-400 hover:text-white transition-colors">Dashboard</Link></li>
+                <li><Link href="#owners" className="text-slate-400 hover:text-white transition-colors">Owner</Link></li>
               </ul>
             </div>
             
@@ -1790,7 +1794,7 @@ export default function Home() {
               <h3 className="text-lg font-semibold mb-4">Resources</h3>
               <ul className="space-y-3">
                 <li><Link href="#faq" className="text-slate-400 hover:text-white transition-colors">FAQ</Link></li>
-                <li><Link href="/help" className="text-slate-400 hover:text-white transition-colors">Help Center</Link></li>
+                <li><button onClick={() => setIsHelpModalOpen(true)} className="text-slate-400 hover:text-white transition-colors">Help Center</button></li>
                 <li><Link href="/blog" className="text-slate-400 hover:text-white transition-colors">Blog</Link></li>
                 <li><Link href="/contact" className="text-slate-400 hover:text-white transition-colors">Contact</Link></li>
               </ul>
@@ -1809,6 +1813,18 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Contact Modal */}
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
+
+      {/* Help Modal */}
+      <HelpModal 
+        isOpen={isHelpModalOpen} 
+        onClose={() => setIsHelpModalOpen(false)} 
+      />
     </div>
   );
 }
