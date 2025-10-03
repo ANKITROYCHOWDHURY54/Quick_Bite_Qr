@@ -1105,8 +1105,8 @@ export default function Home() {
               <div className="mx-auto mt-1 h-1 w-40 sm:w-56 rounded-full bg-slate-400/80"></div>
             </div>
 
-            {/* Phone device (mobile & tablet only) */}
-            <div className="block lg:hidden">
+            {/* Phone device (mobile only) */}
+            <div className="block md:hidden lg:hidden">
               <div className="flex justify-center">
                 <div className="relative w-[180px] sm:w-[200px] md:w-[220px] aspect-[9/19] rounded-[1.6rem] bg-slate-900 shadow-2xl border border-slate-800 overflow-hidden">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-black/80 rounded-b-2xl z-20"></div>
@@ -1122,6 +1122,46 @@ export default function Home() {
                       <source src="/images/mockup2.mp4" type="video/mp4" />
                     </video>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Tablet device (tablet only) */}
+            <div className="hidden md:block lg:hidden">
+              <div className="flex justify-center">
+                {/* Outer chassis */}
+                <div className="relative w-[440px] md:w-[600px] aspect-[3/4] rounded-[2.4rem] bg-gradient-to-b from-slate-900 to-slate-950 shadow-[0_30px_80px_-20px_rgba(2,6,23,0.6)] border-2 border-slate-800 overflow-hidden">
+                  {/* Metallic edge highlight */}
+                  <div className="pointer-events-none absolute inset-0 rounded-[2.4rem] ring-1 ring-white/5"></div>
+
+                  {/* Camera and speaker slot */}
+                  <div className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+                    <div className="w-10 h-1 rounded-full bg-black/70 ring-1 ring-white/10"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-slate-400/90 shadow" />
+                  </div>
+
+                  {/* Side buttons */}
+                  <div className="absolute right-0 top-24 w-1.5 h-10 rounded-l-md bg-slate-700/80"></div>
+                  <div className="absolute right-0 top-40 w-1.5 h-7 rounded-l-md bg-slate-700/80"></div>
+
+                  {/* Inner glass with bezel */}
+                  <div className="absolute inset-3 md:inset-5 rounded-[1.8rem] bg-black overflow-hidden ring-1 ring-black/60">
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-contain bg-black"
+                      poster="/images/restaurant-ambiance.jpg"
+                    >
+                      <source src="/images/mockup3.mp4" type="video/mp4" />
+                    </video>
+                    {/* Glass reflection */}
+                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),transparent_35%)]"></div>
+                  </div>
+
+                  {/* Shadow base */}
+                  <div className="pointer-events-none absolute -bottom-4 left-1/2 -translate-x-1/2 w-2/3 h-4 rounded-full bg-black/40 blur-xl"></div>
                 </div>
               </div>
             </div>
